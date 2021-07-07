@@ -18,6 +18,6 @@ namespace TrainManagementWeb.Models.EF
         public string RulName { get; set; }
         public string RuleType { get; set; }
         public Nullable<int> Class { get; set; }
-        public Nullable<double> Value { get; set; }
+        public double Value { get; set; }
     }
 }

@@ -46,6 +46,12 @@ namespace TrainManagementWeb.Models.DAO
             return station;
         }
 
+        public tblStation GetStationByName(string name)
+        {
+            var station = db.tblStations.Where(x => x.StationName == name).FirstOrDefault();
+            return station;
+        }
+
         public bool Update(tblStation stationModel)
         {
             try

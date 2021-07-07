@@ -42,8 +42,30 @@ namespace TrainManagementWeb.Controllers
         {
             TrainScheduleDao trainScheduleDao = new TrainScheduleDao();
             var trainScheduleDetail = trainScheduleDao.GetTrainScheduleList(departureStationName, arrivalStationName, departureDate).Where(x => x.Train == trainCode).FirstOrDefault();
-            var model = new TrainDao().GetTrainDetail(trainScheduleDetail.TrainId.Value);
-            return View();
+            var train = new TrainDao().GetTrainDetail(trainScheduleDetail.TrainId.Value);
+            var station = new StationDao();
+            var rule = new RuleDao();
+            TrainBookingViewModel model = new TrainBookingViewModel();
+            var arrivalStation = station.GetStationByName(trainScheduleDetail.ArrivalStation);
+            var arrivalStationDistance = arrivalStation.PositonDistance;
+            model.TrainId = trainScheduleDetail.TrainId.Value;
+            model.TrainCode = trainScheduleDetail.Train;
+            model.Departure = trainScheduleDetail.DepartureStation;
+            model.Arrival = trainScheduleDetail.ArrivalStation;
+            model.DepartureDate = trainScheduleDetail.DepartureDate.Value.ToString("dd/MM/yyyy");
+            model.DepartureDate = trainScheduleDetail.DepartureTime;
+            var seatPrice1 = train.ProposedPrice.Value * (decimal)rule.GetRuleClassValue(1);
+            var seatPrice2 = train.ProposedPrice.Value * (decimal)rule.GetRuleClassValue(2);
+            var seatPrice3 = train.ProposedPrice.Value * (decimal)rule.GetRuleClassValue(3);
+            var priceDistance = arrivalStationDistance * rule.GetRuleDistanceValue();
+            model.SeatPrice1 = seatPrice1 + (decimal)priceDistance;
+            model.SeatPrice2 = seatPrice2 + (decimal)priceDistance;
+            model.SeatPrice3 = seatPrice3 + (decimal)priceDistance;
+            model.Seat1Available = 30;
+            model.Seat2Available = 30;
+            model.Seat3Available = 30;
+
+            return View(model);
         }
 
         [HttpGet]

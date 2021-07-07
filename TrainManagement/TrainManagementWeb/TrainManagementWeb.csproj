@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAO\RuleDao.cs" />
     <Compile Include="Models\DAO\StationDao.cs" />
     <Compile Include="Models\DAO\TrainDao.cs" />
     <Compile Include="Models\DAO\TrainScheduleDao.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Models\ViewModel\LoginModel.cs" />
     <Compile Include="Models\ViewModel\SearchTrainViewModel.cs" />
     <Compile Include="Models\ViewModel\StationJsonModel.cs" />
+    <Compile Include="Models\ViewModel\TrainBookingViewModel.cs" />
     <Compile Include="Models\ViewModel\TrainScheduleViewModel.cs" />
     <Compile Include="Models\ViewModel\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
