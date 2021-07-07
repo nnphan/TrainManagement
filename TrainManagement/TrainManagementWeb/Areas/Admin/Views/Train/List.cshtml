@@ -1,0 +1,119 @@
+﻿@model List<TrainManagementWeb.Models.EF.tblTrain>
+@using TrainManagementWeb.Common;
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Train List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-12 text-sm-center form-inline">
+                                    <div class="form-group mr-2">
+                                        <a href='@Url.Action("Create", "Train")'>
+                                            <button class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i> Add New Train</button>
+                                        </a>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
+                            <thead>
+                                <tr>
+                                    <th data-sort-ignore="true" class="min-width"></th>
+                                    <th data-sort-initial="true" data-toggle="true">Train No</th>
+                                    <th>Train Name</th>
+                                    <th>Train Code</th>
+                                    <th>Route</th>
+                                    <th>Status</th>
+                                    <th>AC Coaches </th>
+                                    <th>AC Seats </th>
+                                    <th>First Class coaches </th>
+                                    <th>First Class Seat </th>
+                                    <th>Sleeper Coaches </th>
+                                    <th>Sleeper Seats </th>
+                                    <th>ProposedPrice</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr id="row_@item.Id" @*, onclick="location.href = '@Url.Action("Edit", "Train", new { id=item.Id })'"*@>
+                                    <td class="text-center">
+                                        <div style="margin:2px">
+                                            @Ajax.RawActionLink(string.Format("<button class='demo-delete-row btn btn-danger btn-xs btn-icon'><i class='fa fa-times'></i></button>"), "Delete", "Train", new { @id = item.Id }, new AjaxOptions
+                                           {
+                                               Confirm = "Bạn có muốn xoá bản ghi này?",
+                                               OnComplete = "$('#row_" + @item.Id + "').remove()",
+                                               HttpMethod = "Delete"
+                                           },
+                                            new { })
+                                        </div>
+                                        
+                                        <div style="margin:2px">
+                                            <a href="/Admin/Train/Edit/@item.Id">
+                                                <button class='btn btn-primary btn-xs btn-icon'><i class='mdi mdi-pencil'></i></button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>@item.TrainNo</td>
+                                    <td>@item.TrainName</td>
+                                    <td>@item.TrainCode</td>
+                                    <td>@item.Route</td>
+                                    <td>@item.Status</td>
+                                    <td>@item.ACCoaches</td>
+                                    <td>@item.ACSeats</td>
+                                    <td>@item.FirstClassCoaches</td>
+                                    <td>@item.FirstClassSeats</td>
+                                    <td>@item.SleeperClassCoaches</td>
+                                    <td>@item.SleeperClassSeats</td>
+                                    <td>@item.ProposedPrice</td>
+                                </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr class="active">
+                                    <td colspan="13">
+                                        <div class="text-right">
+                                            <ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+
+</div>
+

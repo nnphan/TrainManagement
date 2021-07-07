@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/TrainManagement/.vs/TrainManagement
+/TrainManagement/packages
+/TrainManagement/TrainManagementWeb/bin
+/TrainManagement/TrainManagementWeb/obj/Debug
+/TrainManagement/TrainManagementWeb/Web.Debug.config
+/TrainManagement/TrainManagementWeb/Web.Release.config
+/TrainManagement/TrainManagementWeb/favicon.ico

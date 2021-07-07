@@ -1,0 +1,15 @@
+﻿@model List<TrainManagementWeb.Models.EF.tblTrain>
+
+    <ul class="nav-third-level nav" aria-expanded="false">
+        @foreach (var item in Model)
+        {
+            var url = "/schedule/train" + "-" + item.Id;
+        <li>
+            @*<a href="@url">@item.TrainNo</a>*@
+            <a href='@Url.Action("GetTrainSchedule", "Schedule", new { id=item.Id })'>@item.TrainNo</a>
+
+        </li>
+
+        }
+
+    </ul>

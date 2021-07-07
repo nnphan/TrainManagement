@@ -1,0 +1,61 @@
+﻿
+<div class="slimscroll-menu">
+
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+
+        <ul class="metismenu" id="side-menu">
+
+            <li class="menu-title">Administrative</li>
+            <li>
+                <a href="widgets.html" class="waves-effect">
+                    <i class="remixicon-vip-crown-2-line"></i>
+                    <span> Dashboard </span>
+                </a>
+            </li>
+
+            <li>
+
+                <a href="javascript: void(0);" class="waves-effect">
+                    <i class="remixicon-stack-line"></i>
+                    <span> Manage </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="/Admin/Station/List">Station</a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Train/List">Train</a>
+                    </li>
+                    <li>
+                        <a href="/Admin/User/List">User</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                    <i class="remixicon-table-line"></i>
+                    <span> Schedule </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level nav" aria-expanded="false">
+                    <li>
+                        <a aria-expanded="false">
+                            Train Schedule
+                            <span class="menu-arrow"></span>
+                        </a>
+                        @{ Html.RenderAction("TrainScheduleMenu", "Schedule");}                       
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="clearfix"></div>
+
+</div>

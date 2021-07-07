@@ -1,0 +1,919 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TrainManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblBookingDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BookingId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Class" Type="int" />
+          <Property Name="StartStation" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="EndStation" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblRuleCancelBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RulName" Type="varchar" MaxLength="50" />
+          <Property Name="RuleType" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="int" />
+          <Property Name="Value" Type="float" />
+        </EntityType>
+        <EntityType Name="tblRuleClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RulName" Type="varchar" MaxLength="50" />
+          <Property Name="RuleType" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="int" />
+          <Property Name="Value" Type="float" />
+        </EntityType>
+        <EntityType Name="tblRuleDistance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RulName" Type="varchar" MaxLength="50" />
+          <Property Name="RuleType" Type="varchar" MaxLength="50" />
+          <Property Name="StartStation" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="EndStation" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Distance" Type="int" />
+          <Property Name="Value" Type="float" />
+        </EntityType>
+        <EntityType Name="tblStation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StationName" Type="varchar" MaxLength="50" />
+          <Property Name="StationCode" Type="varchar" MaxLength="50" />
+          <Property Name="RailwayDivisionName" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="PositonDistance" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTrain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainName" Type="varchar" MaxLength="50" />
+          <Property Name="TrainCode" Type="varchar" MaxLength="50" />
+          <Property Name="TrainNo" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ACCoaches" Type="int" />
+          <Property Name="FirstClassCoaches" Type="int" />
+          <Property Name="SleeperClassCoaches" Type="int" />
+          <Property Name="ProposedPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ACSeats" Type="int" />
+          <Property Name="FirstClassSeats" Type="int" />
+          <Property Name="SleeperClassSeats" Type="int" />
+          <Property Name="Route" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblTrainDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="SeatClass" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblTrainSchedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="StationId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="DepartureDate" Type="datetime" />
+          <Property Name="DepartureTime" Type="varchar" MaxLength="25" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="255" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="255" />
+          <Property Name="Password" Type="varchar" MaxLength="255" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_GetTrainSchedule">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="StationId" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TrainId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="TrainNo" Type="varchar" MaxLength="50" />
+          <Property Name="TrainName" Type="varchar" MaxLength="50" />
+          <Property Name="StationId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="StationName" Type="varchar" MaxLength="50" />
+          <Property Name="DepartureDate" Type="datetime" />
+          <Property Name="DepartureTime" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK__tblBookin__Booki__59063A47">
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__Class__59FA5E80">
+          <End Role="tblClass" Type="Self.tblClass" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClass">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__EndSt__5BE2A6F2">
+          <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="EndStation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__Start__5AEE82B9">
+          <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="StartStation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__UserI__5535A963">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBooking">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblTrainD__Train__46E78A0C">
+          <End Role="tblTrain" Type="Self.tblTrain" Multiplicity="0..1" />
+          <End Role="tblTrainDetail" Type="Self.tblTrainDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTrain">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTrainDetail">
+              <PropertyRef Name="TrainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblTrainS__Stati__6383C8BA">
+          <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
+          <End Role="tblTrainSchedule" Type="Self.tblTrainSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTrainSchedule">
+              <PropertyRef Name="StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblTrainS__Train__628FA481">
+          <End Role="tblTrain" Type="Self.tblTrain" Multiplicity="0..1" />
+          <End Role="tblTrainSchedule" Type="Self.tblTrainSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTrain">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTrainSchedule">
+              <PropertyRef Name="TrainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblUser__RoleId__3B75D760">
+          <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GetTrainSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DepartureStationName" Type="varchar" Mode="In" />
+          <Parameter Name="ArrivalStationName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetTrainScheduleList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DepartureStationName" Type="varchar" Mode="In" />
+          <Parameter Name="ArrivalStationName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_User_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="TrainManagementModelStoreContainer">
+          <EntitySet Name="tblBooking" EntityType="Self.tblBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBookingDetail" EntityType="Self.tblBookingDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblClass" EntityType="Self.tblClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRuleCancelBooking" EntityType="Self.tblRuleCancelBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRuleClass" EntityType="Self.tblRuleClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRuleDistance" EntityType="Self.tblRuleDistance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStation" EntityType="Self.tblStation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTrain" EntityType="Self.tblTrain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTrainDetail" EntityType="Self.tblTrainDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTrainSchedule" EntityType="Self.tblTrainSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_GetTrainSchedule" EntityType="Self.View_GetTrainSchedule" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_GetTrainSchedule].[id] AS [id], 
+    [View_GetTrainSchedule].[TrainId] AS [TrainId], 
+    [View_GetTrainSchedule].[TrainNo] AS [TrainNo], 
+    [View_GetTrainSchedule].[TrainName] AS [TrainName], 
+    [View_GetTrainSchedule].[StationId] AS [StationId], 
+    [View_GetTrainSchedule].[StationName] AS [StationName], 
+    [View_GetTrainSchedule].[DepartureDate] AS [DepartureDate], 
+    [View_GetTrainSchedule].[DepartureTime] AS [DepartureTime]
+    FROM [dbo].[View_GetTrainSchedule] AS [View_GetTrainSchedule]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblBookin__Booki__59063A47" Association="Self.FK__tblBookin__Booki__59063A47">
+            <End Role="tblBooking" EntitySet="tblBooking" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__Class__59FA5E80" Association="Self.FK__tblBookin__Class__59FA5E80">
+            <End Role="tblClass" EntitySet="tblClass" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__EndSt__5BE2A6F2" Association="Self.FK__tblBookin__EndSt__5BE2A6F2">
+            <End Role="tblStation" EntitySet="tblStation" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__Start__5AEE82B9" Association="Self.FK__tblBookin__Start__5AEE82B9">
+            <End Role="tblStation" EntitySet="tblStation" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__UserI__5535A963" Association="Self.FK__tblBookin__UserI__5535A963">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblBooking" EntitySet="tblBooking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblTrainD__Train__46E78A0C" Association="Self.FK__tblTrainD__Train__46E78A0C">
+            <End Role="tblTrain" EntitySet="tblTrain" />
+            <End Role="tblTrainDetail" EntitySet="tblTrainDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblTrainS__Stati__6383C8BA" Association="Self.FK__tblTrainS__Stati__6383C8BA">
+            <End Role="tblStation" EntitySet="tblStation" />
+            <End Role="tblTrainSchedule" EntitySet="tblTrainSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblTrainS__Train__628FA481" Association="Self.FK__tblTrainS__Train__628FA481">
+            <End Role="tblTrain" EntitySet="tblTrain" />
+            <End Role="tblTrainSchedule" EntitySet="tblTrainSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblUser__RoleId__3B75D760" Association="Self.FK__tblUser__RoleId__3B75D760">
+            <End Role="tblRole" EntitySet="tblRole" />
+            <End Role="tblUser" EntitySet="tblUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrainManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__Booki__59063A47" FromRole="tblBooking" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__UserI__5535A963" FromRole="tblBooking" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblBookingDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BookingId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Class" Type="Int32" />
+          <Property Name="StartStation" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EndStation" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblBooking" Relationship="Self.FK__tblBookin__Booki__59063A47" FromRole="tblBookingDetail" ToRole="tblBooking" />
+          <NavigationProperty Name="tblClass" Relationship="Self.FK__tblBookin__Class__59FA5E80" FromRole="tblBookingDetail" ToRole="tblClass" />
+          <NavigationProperty Name="tblStation" Relationship="Self.FK__tblBookin__EndSt__5BE2A6F2" FromRole="tblBookingDetail" ToRole="tblStation" />
+          <NavigationProperty Name="tblStation1" Relationship="Self.FK__tblBookin__Start__5AEE82B9" FromRole="tblBookingDetail" ToRole="tblStation" />
+        </EntityType>
+        <EntityType Name="tblClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__Class__59FA5E80" FromRole="tblClass" ToRole="tblBookingDetail" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblUsers" Relationship="Self.FK__tblUser__RoleId__3B75D760" FromRole="tblRole" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblRuleCancelBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RulName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RuleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="Int32" />
+          <Property Name="Value" Type="Double" />
+        </EntityType>
+        <EntityType Name="tblRuleClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RulName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RuleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="Int32" />
+          <Property Name="Value" Type="Double" />
+        </EntityType>
+        <EntityType Name="tblRuleDistance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RulName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RuleType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartStation" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EndStation" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Distance" Type="Int32" />
+          <Property Name="Value" Type="Double" />
+        </EntityType>
+        <EntityType Name="tblStation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StationCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RailwayDivisionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="PositonDistance" Type="Int32" />
+          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__EndSt__5BE2A6F2" FromRole="tblStation" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblBookingDetails1" Relationship="Self.FK__tblBookin__Start__5AEE82B9" FromRole="tblStation" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblTrainSchedules" Relationship="Self.FK__tblTrainS__Stati__6383C8BA" FromRole="tblStation" ToRole="tblTrainSchedule" />
+        </EntityType>
+        <EntityType Name="tblTrain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TrainCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TrainNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ACCoaches" Type="Int32" />
+          <Property Name="FirstClassCoaches" Type="Int32" />
+          <Property Name="SleeperClassCoaches" Type="Int32" />
+          <Property Name="ProposedPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ACSeats" Type="Int32" />
+          <Property Name="FirstClassSeats" Type="Int32" />
+          <Property Name="SleeperClassSeats" Type="Int32" />
+          <Property Name="Route" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblTrainDetails" Relationship="Self.FK__tblTrainD__Train__46E78A0C" FromRole="tblTrain" ToRole="tblTrainDetail" />
+          <NavigationProperty Name="tblTrainSchedules" Relationship="Self.FK__tblTrainS__Train__628FA481" FromRole="tblTrain" ToRole="tblTrainSchedule" />
+        </EntityType>
+        <EntityType Name="tblTrainDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SeatClass" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblTrain" Relationship="Self.FK__tblTrainD__Train__46E78A0C" FromRole="tblTrainDetail" ToRole="tblTrain" />
+        </EntityType>
+        <EntityType Name="tblTrainSchedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StationId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
+          <Property Name="DepartureTime" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblStation" Relationship="Self.FK__tblTrainS__Stati__6383C8BA" FromRole="tblTrainSchedule" ToRole="tblStation" />
+          <NavigationProperty Name="tblTrain" Relationship="Self.FK__tblTrainS__Train__628FA481" FromRole="tblTrainSchedule" ToRole="tblTrain" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblBookings" Relationship="Self.FK__tblBookin__UserI__5535A963" FromRole="tblUser" ToRole="tblBooking" />
+          <NavigationProperty Name="tblRole" Relationship="Self.FK__tblUser__RoleId__3B75D760" FromRole="tblUser" ToRole="tblRole" />
+        </EntityType>
+        <Association Name="FK__tblBookin__Booki__59063A47">
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__UserI__5535A963">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBooking">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__Class__59FA5E80">
+          <End Role="tblClass" Type="Self.tblClass" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClass">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__EndSt__5BE2A6F2">
+          <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="EndStation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBookin__Start__5AEE82B9">
+          <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
+          <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBookingDetail">
+              <PropertyRef Name="StartStation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblUser__RoleId__3B75D760">
+          <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblTrainS__Stati__6383C8BA">
+          <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
+          <End Role="tblTrainSchedule" Type="Self.tblTrainSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTrainSchedule">
+              <PropertyRef Name="StationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblTrainD__Train__46E78A0C">
+          <End Role="tblTrain" Type="Self.tblTrain" Multiplicity="0..1" />
+          <End Role="tblTrainDetail" Type="Self.tblTrainDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTrain">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTrainDetail">
+              <PropertyRef Name="TrainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblTrainS__Train__628FA481">
+          <End Role="tblTrain" Type="Self.tblTrain" Multiplicity="0..1" />
+          <End Role="tblTrainSchedule" Type="Self.tblTrainSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTrain">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblTrainSchedule">
+              <PropertyRef Name="TrainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrainManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBookings" EntityType="Self.tblBooking" />
+          <EntitySet Name="tblBookingDetails" EntityType="Self.tblBookingDetail" />
+          <EntitySet Name="tblClasses" EntityType="Self.tblClass" />
+          <EntitySet Name="tblRoles" EntityType="Self.tblRole" />
+          <EntitySet Name="tblRuleCancelBookings" EntityType="Self.tblRuleCancelBooking" />
+          <EntitySet Name="tblRuleClasses" EntityType="Self.tblRuleClass" />
+          <EntitySet Name="tblRuleDistances" EntityType="Self.tblRuleDistance" />
+          <EntitySet Name="tblStations" EntityType="Self.tblStation" />
+          <EntitySet Name="tblTrains" EntityType="Self.tblTrain" />
+          <EntitySet Name="tblTrainDetails" EntityType="Self.tblTrainDetail" />
+          <EntitySet Name="tblTrainSchedules" EntityType="Self.tblTrainSchedule" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <AssociationSet Name="FK__tblBookin__Booki__59063A47" Association="Self.FK__tblBookin__Booki__59063A47">
+            <End Role="tblBooking" EntitySet="tblBookings" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__UserI__5535A963" Association="Self.FK__tblBookin__UserI__5535A963">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblBooking" EntitySet="tblBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__Class__59FA5E80" Association="Self.FK__tblBookin__Class__59FA5E80">
+            <End Role="tblClass" EntitySet="tblClasses" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__EndSt__5BE2A6F2" Association="Self.FK__tblBookin__EndSt__5BE2A6F2">
+            <End Role="tblStation" EntitySet="tblStations" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBookin__Start__5AEE82B9" Association="Self.FK__tblBookin__Start__5AEE82B9">
+            <End Role="tblStation" EntitySet="tblStations" />
+            <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblUser__RoleId__3B75D760" Association="Self.FK__tblUser__RoleId__3B75D760">
+            <End Role="tblRole" EntitySet="tblRoles" />
+            <End Role="tblUser" EntitySet="tblUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblTrainS__Stati__6383C8BA" Association="Self.FK__tblTrainS__Stati__6383C8BA">
+            <End Role="tblStation" EntitySet="tblStations" />
+            <End Role="tblTrainSchedule" EntitySet="tblTrainSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblTrainD__Train__46E78A0C" Association="Self.FK__tblTrainD__Train__46E78A0C">
+            <End Role="tblTrain" EntitySet="tblTrains" />
+            <End Role="tblTrainDetail" EntitySet="tblTrainDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblTrainS__Train__628FA481" Association="Self.FK__tblTrainS__Train__628FA481">
+            <End Role="tblTrain" EntitySet="tblTrains" />
+            <End Role="tblTrainSchedule" EntitySet="tblTrainSchedules" />
+          </AssociationSet>
+          <FunctionImport Name="sp_User_Login" ReturnType="Collection(TrainManagementModel.sp_User_Login_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="View_GetTrainSchedule" EntityType="TrainManagementModel.View_GetTrainSchedule" />
+          <FunctionImport Name="sp_GetTrainSchedule" ReturnType="Collection(TrainManagementModel.sp_GetTrainSchedule_Result)">
+            <Parameter Name="DepartureStationName" Mode="In" Type="String" />
+            <Parameter Name="ArrivalStationName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetTrainScheduleList" ReturnType="Collection(TrainManagementModel.sp_GetTrainScheduleList_Result)">
+            <Parameter Name="DepartureStationName" Mode="In" Type="String" />
+            <Parameter Name="ArrivalStationName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_User_Login_Result">
+          <Property Type="Boolean" Name="Result" Nullable="true" />
+          <Property Type="Decimal" Name="UserId" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <EntityType Name="View_GetTrainSchedule">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="StationId" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TrainId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TrainNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TrainName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StationId" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="StationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
+          <Property Name="DepartureTime" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sp_GetTrainSchedule_Result">
+          <Property Type="String" Name="DepartureStation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Train" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DepartureDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="DepartureTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ArrivalStation" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ArrivalDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ArrivalTime" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_GetTrainScheduleList_Result">
+          <Property Type="String" Name="DepartureStation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Train" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="TrainId" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="DepartureDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="DepartureTime" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ArrivalStation" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ArrivalDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ArrivalTime" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrainManagementModelStoreContainer" CdmEntityContainer="TrainManagementEntities">
+          <EntitySetMapping Name="tblBookings">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblBooking">
+              <MappingFragment StoreEntitySet="tblBooking">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBookingDetails">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblBookingDetail">
+              <MappingFragment StoreEntitySet="tblBookingDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="StartStation" ColumnName="StartStation" />
+                <ScalarProperty Name="EndStation" ColumnName="EndStation" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClasses">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblClass">
+              <MappingFragment StoreEntitySet="tblClass">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoles">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblRole">
+              <MappingFragment StoreEntitySet="tblRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRuleCancelBookings">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblRuleCancelBooking">
+              <MappingFragment StoreEntitySet="tblRuleCancelBooking">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RulName" ColumnName="RulName" />
+                <ScalarProperty Name="RuleType" ColumnName="RuleType" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRuleClasses">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblRuleClass">
+              <MappingFragment StoreEntitySet="tblRuleClass">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RulName" ColumnName="RulName" />
+                <ScalarProperty Name="RuleType" ColumnName="RuleType" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRuleDistances">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblRuleDistance">
+              <MappingFragment StoreEntitySet="tblRuleDistance">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RulName" ColumnName="RulName" />
+                <ScalarProperty Name="RuleType" ColumnName="RuleType" />
+                <ScalarProperty Name="StartStation" ColumnName="StartStation" />
+                <ScalarProperty Name="EndStation" ColumnName="EndStation" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStations">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblStation">
+              <MappingFragment StoreEntitySet="tblStation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StationName" ColumnName="StationName" />
+                <ScalarProperty Name="StationCode" ColumnName="StationCode" />
+                <ScalarProperty Name="RailwayDivisionName" ColumnName="RailwayDivisionName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PositonDistance" ColumnName="PositonDistance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTrains">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblTrain">
+              <MappingFragment StoreEntitySet="tblTrain">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TrainName" ColumnName="TrainName" />
+                <ScalarProperty Name="TrainCode" ColumnName="TrainCode" />
+                <ScalarProperty Name="TrainNo" ColumnName="TrainNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ACCoaches" ColumnName="ACCoaches" />
+                <ScalarProperty Name="FirstClassCoaches" ColumnName="FirstClassCoaches" />
+                <ScalarProperty Name="SleeperClassCoaches" ColumnName="SleeperClassCoaches" />
+                <ScalarProperty Name="ProposedPrice" ColumnName="ProposedPrice" />
+                <ScalarProperty Name="ACSeats" ColumnName="ACSeats" />
+                <ScalarProperty Name="FirstClassSeats" ColumnName="FirstClassSeats" />
+                <ScalarProperty Name="SleeperClassSeats" ColumnName="SleeperClassSeats" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTrainDetails">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblTrainDetail">
+              <MappingFragment StoreEntitySet="tblTrainDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+                <ScalarProperty Name="SeatClass" ColumnName="SeatClass" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTrainSchedules">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblTrainSchedule">
+              <MappingFragment StoreEntitySet="tblTrainSchedule">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+                <ScalarProperty Name="StationId" ColumnName="StationId" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="TrainManagementModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_User_Login" FunctionName="TrainManagementModel.Store.sp_User_Login">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrainManagementModel.sp_User_Login_Result">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="View_GetTrainSchedule">
+            <EntityTypeMapping TypeName="TrainManagementModel.View_GetTrainSchedule">
+              <MappingFragment StoreEntitySet="View_GetTrainSchedule">
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="StationName" ColumnName="StationName" />
+                <ScalarProperty Name="StationId" ColumnName="StationId" />
+                <ScalarProperty Name="TrainName" ColumnName="TrainName" />
+                <ScalarProperty Name="TrainNo" ColumnName="TrainNo" />
+                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetTrainSchedule" FunctionName="TrainManagementModel.Store.sp_GetTrainSchedule">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrainManagementModel.sp_GetTrainSchedule_Result">
+                <ScalarProperty Name="DepartureStation" ColumnName="DepartureStation" />
+                <ScalarProperty Name="Train" ColumnName="Train" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ArrivalStation" ColumnName="ArrivalStation" />
+                <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetTrainScheduleList" FunctionName="TrainManagementModel.Store.sp_GetTrainScheduleList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrainManagementModel.sp_GetTrainScheduleList_Result">
+                <ScalarProperty Name="DepartureStation" ColumnName="DepartureStation" />
+                <ScalarProperty Name="Train" ColumnName="Train" />
+                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ArrivalStation" ColumnName="ArrivalStation" />
+                <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
+                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

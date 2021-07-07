@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3f546629253f4c1a9cdd01d3c3f9105e" Name="Diagram1">
+        <EntityTypeShape EntityType="TrainManagementModel.tblBooking" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblBookingDetail" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblClass" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblRole" Width="1.5" PointX="1.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblRuleCancelBooking" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblRuleClass" Width="1.5" PointX="8.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblRuleDistance" Width="1.5" PointX="8.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblStation" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblTrain" Width="1.5" PointX="3.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblTrainDetail" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblTrainSchedule" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainManagementModel.tblUser" Width="1.5" PointX="1.5" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblBookin__Booki__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblBookin__UserI__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblBookin__Class__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblBookin__EndSt__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblBookin__Start__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblUser__RoleId__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblTrainS__Stati__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblTrainD__Train__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="TrainManagementModel.FK__tblTrainS__Train__628FA481" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TrainManagementModel.View_GetTrainSchedule" Width="1.5" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

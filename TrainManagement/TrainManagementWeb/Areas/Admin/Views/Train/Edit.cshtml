@@ -1,0 +1,132 @@
+﻿@model TrainManagementWeb.Models.EF.tblTrain
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                        </div>
+                        <h4 class="page-title">Edit Train</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-box">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="p-2">
+                                    @using (Html.BeginForm("Edit", "Train", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+                                    {
+                                        @Html.ValidationSummary(false, "", new { @class = "text-danger" });
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">Train NO</label>
+                                                @Html.TextBoxFor(model => model.TrainNo, new { @class = "form-control", @id = "simpleinput", @placeholder = "Train No", @autofocus = "autofocus", @type = "text" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">Train Name</label>
+                                                @Html.TextBoxFor(model => model.TrainName, new { @class = "form-control", @id = "simpleinput", @placeholder = "Train Name", @type = "text" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">Train Code</label>
+                                                @Html.TextBoxFor(model => model.TrainCode, new { @class = "form-control", @id = "simpleinput", @placeholder = "Train Code", @type = "text" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">Proposed Price</label>
+                                                @Html.TextBoxFor(model => model.ProposedPrice, new { @class = "form-control", @id = "simpleinput", @placeholder = "Proposed Price", @type = "text" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">Route</label>
+                                                @Html.DropDownListFor(x => x.Route, new List<SelectListItem>
+                                              {
+                                                  new SelectListItem() {Text = "SaiGon-HaNoi", Value="SaiGon-HaNoi"},
+                                                  new SelectListItem() {Text = "SaiGon-PhanThiet", Value="SaiGon-PhanThiet"},
+                                                  new SelectListItem() {Text = "SaiGon-NhaTrang", Value="SaiGon-NhaTrang"},
+                                                  new SelectListItem() {Text = "SaiGon-DaNang", Value="SaiGon-DaNang"},
+                                              }, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">Status</label>
+                                                @Html.DropDownListFor(x => x.Status, new List<SelectListItem>
+                                               {
+                                                   new SelectListItem() {Text = "Up", Value="Up"},
+                                                   new SelectListItem() {Text = "Down", Value="Down"}
+                                               }, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">AC Coaches</label>
+                                                @Html.TextBoxFor(model => model.ACCoaches, new { @class = "form-control", @id = "simpleinput", @placeholder = "AC Coaches", @type = "text" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">AC Seats</label>
+                                                @Html.TextBoxFor(model => model.ACSeats, new { @class = "form-control", @id = "simpleinput", @placeholder = "AC Seats", @type = "text" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">First Class Coachs</label>
+                                                @Html.TextBoxFor(model => model.FirstClassCoaches, new { @class = "form-control", @id = "simpleinput", @placeholder = "First Class Coachs", @type = "text" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">First Class Seats</label>
+                                                @Html.TextBoxFor(model => model.FirstClassSeats, new { @class = "form-control", @id = "simpleinput", @placeholder = "AC Seats", @type = "text" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">Sleeper Class Coachs</label>
+                                                @Html.TextBoxFor(model => model.SleeperClassCoaches, new { @class = "form-control", @id = "simpleinput", @placeholder = "Sleeper Class Seats", @type = "text" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">Sleeper Class Seats</label>
+                                                @Html.TextBoxFor(model => model.SleeperClassSeats, new { @class = "form-control", @id = "simpleinput", @placeholder = "Sleeper Class Seats", @type = "text" })
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" style="text-align: right" class="btn btn-primary">Edit</button>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- end card-box -->
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+
+</div>
+
+

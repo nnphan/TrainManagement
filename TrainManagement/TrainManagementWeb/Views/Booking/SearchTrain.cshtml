@@ -1,0 +1,95 @@
+﻿@model  TrainManagementWeb.Models.ViewModel.SearchTrainViewModel
+
+    @*<div id="flight" class="tab-pane fade in active">
+        <form action="/Booking/GetListTrainSchedule" method="get" class="colorlib-form">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="booknow">
+                        <h2>Book Now</h2>
+                        <span>Best Price Online</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Departure Station:</label>
+                        <div class="form-field">
+                            @Html.TextBoxFor(model => model.DepartureStationName, new { @type = "text", @id = "location", @class="form-control", @placeholder="Search Location" })
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Arrival Station:</label>
+                        <div class="form-field">
+                            @Html.TextBoxFor(model => model.ArrivalStationName, new { @type = "text", @id = "location", @class = "form-control", @placeholder = "Search Location" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="date">Time:</label>
+                        <div class="form-field">
+                            <i class="icon icon-calendar2"></i>
+                            @Html.TextBoxFor(model => model.DepartureDate, new { @type = "text", @id = "date", @class = "form-control date", @data_date_format = "dd/MM/yyyy", @placeholder = "Departure date" })
+                            @Html.ValidationMessageFor(model => model.DepartureDate, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit"  id="submit" value="Find Train" class="btn btn-primary btn-block">Find Train</button>
+                </div>
+            </div>
+        </form>
+    </div>*@
+
+
+<div id="flight" class="tab-pane fade in active">
+    <form action="/Booking/GetListTrainSchedule" method="get" class="colorlib-form" >
+        <div class="row">
+            <div class="col-md-2">
+                <div class="booknow">
+                    <h2>Book Now</h2>
+                    <span>Best Price Online</span>
+                </div>
+            </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Departure Station:</label>
+                        <div class="form-field">
+                            @Html.TextBoxFor(model => model.DepartureStationName, new { @class = "form-control", @placeholder = "Search Station", @type = "text" })
+                            @Html.ValidationMessageFor(model => model.DepartureStationName, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="date">Arrival Station:</label>
+                        <div class="form-field">
+                            @Html.TextBoxFor(model => model.ArrivalStationName, new { @class = "form-control", @placeholder = "Search Station", @type = "text" })
+                            @Html.ValidationMessageFor(model => model.ArrivalStationName, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="date">Time:</label>
+                        <div class="form-field">
+                            <i class="icon icon-calendar2"></i>
+                            @Html.TextBoxFor(model => model.DepartureDate, new { @type = "text", @id = "date", @class = "form-control date", @data_date_format = "dd/MM/yyyy", @placeholder = "Departure date" })
+                            @Html.ValidationMessageFor(model => model.DepartureDate, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" name="submit" id="submit" value="Find Train" class="btn btn-primary btn-block">
+                </div>        
+        </div>
+    </form>
+</div>
