@@ -27,7 +27,18 @@ namespace TrainManagementWeb.Controllers
             }
             return View("Index");
         }
-
+        [HttpGet]
+        public ActionResult GetListBooking(SearchBookingViewModel searchBooking)
+        {
+            if (ModelState.IsValid)
+            {
+                BookingDao bookingDao = new BookingDao();
+                var bookingInfo = bookingDao.GetBookingInfo(searchBooking);
+                return View(bookingInfo);
+            }
+            return View("Index");
+        }
+        
         public void SetViewBag(decimal? selectedId = null)
         {
             var stationDao = new StationDao();
@@ -41,8 +52,9 @@ namespace TrainManagementWeb.Controllers
         public ActionResult Detail(string trainCode, string departureStationName, string arrivalStationName, string departureDate)
         {
             TrainScheduleDao trainScheduleDao = new TrainScheduleDao();
+            var trainDao = new TrainDao();
             var trainScheduleDetail = trainScheduleDao.GetTrainScheduleList(departureStationName, arrivalStationName, departureDate).Where(x => x.Train == trainCode).FirstOrDefault();
-            var train = new TrainDao().GetTrainDetail(trainScheduleDetail.TrainId.Value);
+            var train = trainDao.GetTrainDetail(trainScheduleDetail.TrainId.Value);
             var station = new StationDao();
             var rule = new RuleDao();
             TrainBookingViewModel model = new TrainBookingViewModel();
@@ -53,7 +65,7 @@ namespace TrainManagementWeb.Controllers
             model.Departure = trainScheduleDetail.DepartureStation;
             model.Arrival = trainScheduleDetail.ArrivalStation;
             model.DepartureDate = trainScheduleDetail.DepartureDate.Value.ToString("dd/MM/yyyy");
-            model.DepartureDate = trainScheduleDetail.DepartureTime;
+            model.DepartureTime = trainScheduleDetail.DepartureTime;
             var seatPrice1 = train.ProposedPrice.Value * (decimal)rule.GetRuleClassValue(1);
             var seatPrice2 = train.ProposedPrice.Value * (decimal)rule.GetRuleClassValue(2);
             var seatPrice3 = train.ProposedPrice.Value * (decimal)rule.GetRuleClassValue(3);
@@ -61,9 +73,9 @@ namespace TrainManagementWeb.Controllers
             model.SeatPrice1 = seatPrice1 + (decimal)priceDistance;
             model.SeatPrice2 = seatPrice2 + (decimal)priceDistance;
             model.SeatPrice3 = seatPrice3 + (decimal)priceDistance;
-            model.Seat1Available = 30;
-            model.Seat2Available = 30;
-            model.Seat3Available = 30;
+            model.Seat1Available = trainDao.GetSeatAvailable(trainCode,1, departureDate) ;
+            model.Seat2Available = trainDao.GetSeatAvailable(trainCode,2, departureDate);
+            model.Seat3Available = trainDao.GetSeatAvailable(trainCode,3, departureDate);
 
             return View(model);
         }

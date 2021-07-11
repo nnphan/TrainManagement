@@ -132,6 +132,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RuleController.cs" />
     <Compile Include="Areas\Admin\Controllers\ScheduleController.cs" />
     <Compile Include="Areas\Admin\Controllers\StationController.cs" />
     <Compile Include="Areas\Admin\Controllers\TrainController.cs" />
@@ -144,10 +145,13 @@
     <Compile Include="Common\SessionHelper.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAO\BookingDao.cs" />
+    <Compile Include="Models\DAO\BookingDetailDao.cs" />
     <Compile Include="Models\DAO\RuleDao.cs" />
     <Compile Include="Models\DAO\StationDao.cs" />
     <Compile Include="Models\DAO\TrainDao.cs" />
@@ -199,26 +203,30 @@
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\TrainManagementDbContext.Context.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>TrainManagementDbContext.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\TrainManagementDbContext.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\EF\TrainManagementDbContext.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\View_GetTrainSchedule.cs">
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\BookingTrain.cs" />
+    <Compile Include="Models\ViewModel\CartItem.cs" />
     <Compile Include="Models\ViewModel\CreateStationModel.cs" />
     <Compile Include="Models\ViewModel\CreateUserModel.cs" />
     <Compile Include="Models\ViewModel\LoginModel.cs" />
+    <Compile Include="Models\ViewModel\RuleViewModel.cs" />
+    <Compile Include="Models\ViewModel\SearchBookingViewModel.cs" />
     <Compile Include="Models\ViewModel\SearchTrainViewModel.cs" />
     <Compile Include="Models\ViewModel\StationJsonModel.cs" />
     <Compile Include="Models\ViewModel\TrainBookingViewModel.cs" />
@@ -527,6 +535,7 @@
     <Content Include="Assets\Client\images\Train\train_icon.png" />
     <Content Include="Assets\Client\js\bootstrap-datepicker.js" />
     <Content Include="Assets\Client\js\bootstrap.min.js" />
+    <Content Include="Assets\Client\js\CartController.js" />
     <Content Include="Assets\Client\js\google_map.js" />
     <Content Include="Assets\Client\js\jquery-1.11.3.min.js" />
     <Content Include="Assets\Client\js\jquery-1.7.2.min.js" />
@@ -558,10 +567,13 @@
       <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
       <LastGenOutput>TrainManagementDbContext.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\EF\TrainManagementDbContext.edmx.diagram">
+      <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
+    </Content>
     <Content Include="Models\EF\TrainManagementDbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
       <LastGenOutput>TrainManagementDbContext.cs</LastGenOutput>
+      <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -722,16 +734,14 @@
     <Content Include="Areas\Admin\Views\Station\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Train\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Schedule\TrainScheduleMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\GetTrainSchedule.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Schedule\Edit.cshtml" />
     <EntityDeploy Include="Models\EF\TrainManagementDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TrainManagementDbContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\EF\TrainManagementDbContext.edmx.diagram">
-      <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
-    </Content>
-    <Content Include="Areas\Admin\Views\Schedule\GetTrainSchedule.cshtml" />
-    <Content Include="Areas\Admin\Views\Schedule\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Schedule\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Rule\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -764,6 +774,9 @@
     <Content Include="Views\Booking\SearchReservation.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\Detail.cshtml" />
+    <Content Include="Views\Cart\CartDetail.cshtml" />
+    <Content Include="Views\Cart\Payment.cshtml" />
+    <Content Include="Views\Cart\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

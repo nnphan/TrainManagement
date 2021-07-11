@@ -3,7 +3,10 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section jsFooter{
 
+    <script src="~/Assets/Client/js/CartController.js"></script>
+}
 <div class="colorlib-wrap">
     <div class="container">
         <div class="row">
@@ -18,6 +21,8 @@
                                 <p class="price">Departure Time : @Model.DepartureTime</p>
 
                             </div>
+                            @{ var url = "/Cart/AddItem?trainCode=" + @Model.TrainCode + "&depStation=" + @Model.Departure + "&arStation=" + Model.Arrival + "&deDay=" + Model.DepartureDate + "&depTime=" + Model.DepartureTime;
+                            }
                             <div class="row">
                                 <div class="col-md-12 animate-box">
                                     <div class="room-wrap">
@@ -30,7 +35,7 @@
                                                     <h2>AC Coaches Class</h2>
                                                     <p class="price"><span>@Model.SeatPrice1.ToString("N0")</span> <small>/ seat</small></p>
                                                     <p class="price">Seat Available : @Model.Seat1Available</p>
-                                                    <p><a href="#" class="btn btn-primary">Book Now!</a></p>
+                                                    <p><a href="@url&price=@Model.SeatPrice1&classSeat=AC Coaches Class" class="btn btn-primary">Book Now!</a></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -48,7 +53,7 @@
                                                     <h2>First Class Coaches</h2>
                                                     <p class="price"><span>@Model.SeatPrice2.ToString("N0")</span> <small>/ seat</small></p>
                                                     <p class="price">Seat Available : @Model.Seat2Available</p>
-                                                    <p><a href="#" class="btn btn-primary">Book Now!</a></p>
+                                                    <p><a href="@url&price=@Model.SeatPrice2&classSeat=First Class Coaches" class="btn btn-primary">Book Now!</a></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -66,7 +71,7 @@
                                                     <h2>Sleeper Class Coaches</h2>
                                                     <p class="price"><span>@Model.SeatPrice3.ToString("N0")</span> <small>/ seat</small></p>
                                                     <p class="price">Seat Available : @Model.Seat3Available</p>
-                                                    <p><a href="#" class="btn btn-primary">Book Now!</a></p>
+                                                    <p><a href="@url&price=@Model.SeatPrice3&classSeat=Sleeper Class Coaches" class="btn btn-primary">Book Now!</a></p>
                                                 </div>
                                             </div>
                                         </div>

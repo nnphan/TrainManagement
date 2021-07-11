@@ -41,19 +41,6 @@ namespace TrainManagementWeb.Models.EF
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<View_GetTrainSchedule> View_GetTrainSchedule { get; set; }
     
-        public virtual ObjectResult<sp_User_Login_Result> sp_User_Login(string email, string password)
-        {
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("Password", password) :
-                new ObjectParameter("Password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_User_Login_Result>("sp_User_Login", emailParameter, passwordParameter);
-        }
-    
         public virtual ObjectResult<sp_GetTrainSchedule_Result> sp_GetTrainSchedule(string departureStationName, string arrivalStationName)
         {
             var departureStationNameParameter = departureStationName != null ?
@@ -78,6 +65,36 @@ namespace TrainManagementWeb.Models.EF
                 new ObjectParameter("ArrivalStationName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetTrainScheduleList_Result>("sp_GetTrainScheduleList", departureStationNameParameter, arrivalStationNameParameter);
+        }
+    
+        public virtual ObjectResult<sp_User_Login_Result> sp_User_Login(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_User_Login_Result>("sp_User_Login", emailParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_Count_SeatAvailable(string trainCode, Nullable<int> classId, Nullable<System.DateTime> date)
+        {
+            var trainCodeParameter = trainCode != null ?
+                new ObjectParameter("TrainCode", trainCode) :
+                new ObjectParameter("TrainCode", typeof(string));
+    
+            var classIdParameter = classId.HasValue ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(int));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_Count_SeatAvailable", trainCodeParameter, classIdParameter, dateParameter);
         }
     }
 }

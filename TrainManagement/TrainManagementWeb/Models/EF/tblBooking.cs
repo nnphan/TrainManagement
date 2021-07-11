@@ -24,6 +24,11 @@ namespace TrainManagementWeb.Models.EF
         public Nullable<decimal> UserId { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PassportId { get; set; }
+        public string PRN { get; set; }
+        public string UserName { get; set; }
+        public Nullable<bool> IsCancel { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblBookingDetail> tblBookingDetails { get; set; }

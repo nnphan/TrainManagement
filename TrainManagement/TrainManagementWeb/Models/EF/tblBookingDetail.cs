@@ -21,6 +21,14 @@ namespace TrainManagementWeb.Models.EF
         public Nullable<decimal> EndStation { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public string TrainCode { get; set; }
+        public Nullable<System.DateTime> DepDay { get; set; }
+        public string DepTime { get; set; }
+        public string StartStationName { get; set; }
+        public string EndStationName { get; set; }
+        public Nullable<int> SeatNum { get; set; }
+        public Nullable<int> CoachNum { get; set; }
     
         public virtual tblBooking tblBooking { get; set; }
         public virtual tblClass tblClass { get; set; }

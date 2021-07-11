@@ -1,33 +1,36 @@
-﻿
-    @*<div id="hotel" class="tab-pane fade">
-        <form method="post" class="colorlib-form">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="booknow">
-                        <h2>Book Now</h2>
-                        <span>Best Price Online</span>
+﻿@model  TrainManagementWeb.Models.ViewModel.SearchBookingViewModel
+<div id="hotel" class="tab-pane fade">
+    <form method="get" action="/Booking/GetListBooking" class="colorlib-form">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="date">PRN no:</label>
+                    <div class="form-field">
+                        @Html.TextBoxFor(model => model.PRNno, new { @class = "form-control", @placeholder = "Your PRN no..", @type = "text" })
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="date">PRN no:</label>
-                        <div class="form-field">
-                            <input type="text" class="form-control" placeholder="Your PRN no..">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" name="submit" id="submit" value="Find Reservation " class="btn btn-primary btn-block">
                 </div>
             </div>
-        </form>
-    </div>*@
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="date">Phone number:</label>
+                    <div class="form-field">
+                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", @placeholder = "Your phone number..", @type = "text" })
 
-    <div id="hotel" class="tab-pane fade">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-2">
+                <input type="submit" name="submit" id="submit" value="Find Reservation " class="btn btn-primary btn-block">
+            </div>
+        </div>
+    </form>
+</div>
+
+@*<div id="hotel" class="tab-pane fade">
         <form method="post" class="colorlib-form">
             <div class="row">
                 <div class="col-md-2">
@@ -74,4 +77,4 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div>*@

@@ -15,6 +15,7 @@ namespace TrainManagementWeb.Models.EF
     {
         public string DepartureStation { get; set; }
         public string Train { get; set; }
+        public Nullable<decimal> TrainId { get; set; }
         public System.DateTime DepartureDate { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalStation { get; set; }

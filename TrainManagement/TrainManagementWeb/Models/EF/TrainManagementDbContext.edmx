@@ -9,22 +9,35 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="numeric" Precision="18" Scale="0" />
           <Property Name="TotalPrice" Type="decimal" Precision="19" Scale="4" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="PassportId" Type="varchar" MaxLength="50" />
+          <Property Name="PRN" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="IsCancel" Type="bit" />
         </EntityType>
         <EntityType Name="tblBookingDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BookingId" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Class" Type="int" />
           <Property Name="StartStation" Type="numeric" Precision="18" Scale="0" />
           <Property Name="EndStation" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Quantity" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TrainCode" Type="varchar" MaxLength="50" />
+          <Property Name="DepDay" Type="datetime" />
+          <Property Name="DepTime" Type="varchar" MaxLength="50" />
+          <Property Name="StartStationName" Type="varchar" MaxLength="50" />
+          <Property Name="EndStationName" Type="varchar" MaxLength="50" />
+          <Property Name="SeatNum" Type="int" />
+          <Property Name="CoachNum" Type="int" />
         </EntityType>
         <EntityType Name="tblClass">
           <Key>
@@ -152,7 +165,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <Property Name="DepartureDate" Type="datetime" />
           <Property Name="DepartureTime" Type="varchar" MaxLength="25" />
         </EntityType>
-        <Association Name="FK__tblBookin__Booki__59063A47">
+        <Association Name="FK__tblBookin__Booki__07C12930">
           <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -164,7 +177,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__Class__59FA5E80">
+        <Association Name="FK__tblBookin__Class__08B54D69">
           <End Role="tblClass" Type="Self.tblClass" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -176,7 +189,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__EndSt__5BE2A6F2">
+        <Association Name="FK__tblBookin__EndSt__09A971A2">
           <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -188,7 +201,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__Start__5AEE82B9">
+        <Association Name="FK__tblBookin__Start__0A9D95DB">
           <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -200,7 +213,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__UserI__5535A963">
+        <Association Name="FK__tblBookin__UserI__03F0984C">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -260,6 +273,11 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_Count_SeatAvailable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TrainCode" Type="varchar" Mode="In" />
+          <Parameter Name="ClassId" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="sp_GetTrainSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DepartureStationName" Type="varchar" Mode="In" />
           <Parameter Name="ArrivalStationName" Type="varchar" Mode="In" />
@@ -297,23 +315,23 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
     [View_GetTrainSchedule].[DepartureTime] AS [DepartureTime]
     FROM [dbo].[View_GetTrainSchedule] AS [View_GetTrainSchedule]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__tblBookin__Booki__59063A47" Association="Self.FK__tblBookin__Booki__59063A47">
+          <AssociationSet Name="FK__tblBookin__Booki__07C12930" Association="Self.FK__tblBookin__Booki__07C12930">
             <End Role="tblBooking" EntitySet="tblBooking" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__Class__59FA5E80" Association="Self.FK__tblBookin__Class__59FA5E80">
+          <AssociationSet Name="FK__tblBookin__Class__08B54D69" Association="Self.FK__tblBookin__Class__08B54D69">
             <End Role="tblClass" EntitySet="tblClass" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__EndSt__5BE2A6F2" Association="Self.FK__tblBookin__EndSt__5BE2A6F2">
+          <AssociationSet Name="FK__tblBookin__EndSt__09A971A2" Association="Self.FK__tblBookin__EndSt__09A971A2">
             <End Role="tblStation" EntitySet="tblStation" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__Start__5AEE82B9" Association="Self.FK__tblBookin__Start__5AEE82B9">
+          <AssociationSet Name="FK__tblBookin__Start__0A9D95DB" Association="Self.FK__tblBookin__Start__0A9D95DB">
             <End Role="tblStation" EntitySet="tblStation" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__UserI__5535A963" Association="Self.FK__tblBookin__UserI__5535A963">
+          <AssociationSet Name="FK__tblBookin__UserI__03F0984C" Association="Self.FK__tblBookin__UserI__03F0984C">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblBooking" EntitySet="tblBooking" />
           </AssociationSet>
@@ -342,28 +360,41 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__Booki__59063A47" FromRole="tblBooking" ToRole="tblBookingDetail" />
-          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__UserI__5535A963" FromRole="tblBooking" ToRole="tblUser" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PassportId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PRN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__Booki__07C12930" FromRole="tblBooking" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__UserI__03F0984C" FromRole="tblBooking" ToRole="tblUser" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsCancel" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblBookingDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BookingId" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Class" Type="Int32" />
           <Property Name="StartStation" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="EndStation" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblBooking" Relationship="Self.FK__tblBookin__Booki__59063A47" FromRole="tblBookingDetail" ToRole="tblBooking" />
-          <NavigationProperty Name="tblClass" Relationship="Self.FK__tblBookin__Class__59FA5E80" FromRole="tblBookingDetail" ToRole="tblClass" />
-          <NavigationProperty Name="tblStation" Relationship="Self.FK__tblBookin__EndSt__5BE2A6F2" FromRole="tblBookingDetail" ToRole="tblStation" />
-          <NavigationProperty Name="tblStation1" Relationship="Self.FK__tblBookin__Start__5AEE82B9" FromRole="tblBookingDetail" ToRole="tblStation" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TrainCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblBooking" Relationship="Self.FK__tblBookin__Booki__07C12930" FromRole="tblBookingDetail" ToRole="tblBooking" />
+          <NavigationProperty Name="tblClass" Relationship="Self.FK__tblBookin__Class__08B54D69" FromRole="tblBookingDetail" ToRole="tblClass" />
+          <NavigationProperty Name="tblStation" Relationship="Self.FK__tblBookin__EndSt__09A971A2" FromRole="tblBookingDetail" ToRole="tblStation" />
+          <NavigationProperty Name="tblStation1" Relationship="Self.FK__tblBookin__Start__0A9D95DB" FromRole="tblBookingDetail" ToRole="tblStation" />
+          <Property Name="DepDay" Type="DateTime" Precision="3" />
+          <Property Name="DepTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartStationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EndStationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SeatNum" Type="Int32" />
+          <Property Name="CoachNum" Type="Int32" />
         </EntityType>
         <EntityType Name="tblClass">
           <Key>
@@ -371,7 +402,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__Class__59FA5E80" FromRole="tblClass" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__Class__08B54D69" FromRole="tblClass" ToRole="tblBookingDetail" />
         </EntityType>
         <EntityType Name="tblRole">
           <Key>
@@ -424,8 +455,8 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <Property Name="RailwayDivisionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="PositonDistance" Type="Int32" />
-          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__EndSt__5BE2A6F2" FromRole="tblStation" ToRole="tblBookingDetail" />
-          <NavigationProperty Name="tblBookingDetails1" Relationship="Self.FK__tblBookin__Start__5AEE82B9" FromRole="tblStation" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblBookingDetails" Relationship="Self.FK__tblBookin__EndSt__09A971A2" FromRole="tblStation" ToRole="tblBookingDetail" />
+          <NavigationProperty Name="tblBookingDetails1" Relationship="Self.FK__tblBookin__Start__0A9D95DB" FromRole="tblStation" ToRole="tblBookingDetail" />
           <NavigationProperty Name="tblTrainSchedules" Relationship="Self.FK__tblTrainS__Stati__6383C8BA" FromRole="tblStation" ToRole="tblTrainSchedule" />
         </EntityType>
         <EntityType Name="tblTrain">
@@ -484,10 +515,24 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <Property Name="RoleId" Type="Int32" />
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblBookings" Relationship="Self.FK__tblBookin__UserI__5535A963" FromRole="tblUser" ToRole="tblBooking" />
+          <NavigationProperty Name="tblBookings" Relationship="Self.FK__tblBookin__UserI__03F0984C" FromRole="tblUser" ToRole="tblBooking" />
           <NavigationProperty Name="tblRole" Relationship="Self.FK__tblUser__RoleId__3B75D760" FromRole="tblUser" ToRole="tblRole" />
         </EntityType>
-        <Association Name="FK__tblBookin__Booki__59063A47">
+        <EntityType Name="View_GetTrainSchedule">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="StationId" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TrainId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TrainNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TrainName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StationId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="StationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
+          <Property Name="DepartureTime" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__tblBookin__Booki__07C12930">
           <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -499,7 +544,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__UserI__5535A963">
+        <Association Name="FK__tblBookin__UserI__03F0984C">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -511,7 +556,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__Class__59FA5E80">
+        <Association Name="FK__tblBookin__Class__08B54D69">
           <End Role="tblClass" Type="Self.tblClass" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -523,7 +568,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__EndSt__5BE2A6F2">
+        <Association Name="FK__tblBookin__EndSt__09A971A2">
           <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -535,7 +580,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblBookin__Start__5AEE82B9">
+        <Association Name="FK__tblBookin__Start__0A9D95DB">
           <End Role="tblStation" Type="Self.tblStation" Multiplicity="0..1" />
           <End Role="tblBookingDetail" Type="Self.tblBookingDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -608,23 +653,24 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <EntitySet Name="tblTrainDetails" EntityType="Self.tblTrainDetail" />
           <EntitySet Name="tblTrainSchedules" EntityType="Self.tblTrainSchedule" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
-          <AssociationSet Name="FK__tblBookin__Booki__59063A47" Association="Self.FK__tblBookin__Booki__59063A47">
+          <EntitySet Name="View_GetTrainSchedule" EntityType="Self.View_GetTrainSchedule" />
+          <AssociationSet Name="FK__tblBookin__Booki__07C12930" Association="Self.FK__tblBookin__Booki__07C12930">
             <End Role="tblBooking" EntitySet="tblBookings" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__UserI__5535A963" Association="Self.FK__tblBookin__UserI__5535A963">
+          <AssociationSet Name="FK__tblBookin__UserI__03F0984C" Association="Self.FK__tblBookin__UserI__03F0984C">
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblBooking" EntitySet="tblBookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__Class__59FA5E80" Association="Self.FK__tblBookin__Class__59FA5E80">
+          <AssociationSet Name="FK__tblBookin__Class__08B54D69" Association="Self.FK__tblBookin__Class__08B54D69">
             <End Role="tblClass" EntitySet="tblClasses" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__EndSt__5BE2A6F2" Association="Self.FK__tblBookin__EndSt__5BE2A6F2">
+          <AssociationSet Name="FK__tblBookin__EndSt__09A971A2" Association="Self.FK__tblBookin__EndSt__09A971A2">
             <End Role="tblStation" EntitySet="tblStations" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblBookin__Start__5AEE82B9" Association="Self.FK__tblBookin__Start__5AEE82B9">
+          <AssociationSet Name="FK__tblBookin__Start__0A9D95DB" Association="Self.FK__tblBookin__Start__0A9D95DB">
             <End Role="tblStation" EntitySet="tblStations" />
             <End Role="tblBookingDetail" EntitySet="tblBookingDetails" />
           </AssociationSet>
@@ -644,11 +690,6 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             <End Role="tblTrain" EntitySet="tblTrains" />
             <End Role="tblTrainSchedule" EntitySet="tblTrainSchedules" />
           </AssociationSet>
-          <FunctionImport Name="sp_User_Login" ReturnType="Collection(TrainManagementModel.sp_User_Login_Result)">
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="Password" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="View_GetTrainSchedule" EntityType="TrainManagementModel.View_GetTrainSchedule" />
           <FunctionImport Name="sp_GetTrainSchedule" ReturnType="Collection(TrainManagementModel.sp_GetTrainSchedule_Result)">
             <Parameter Name="DepartureStationName" Mode="In" Type="String" />
             <Parameter Name="ArrivalStationName" Mode="In" Type="String" />
@@ -657,28 +698,20 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
             <Parameter Name="DepartureStationName" Mode="In" Type="String" />
             <Parameter Name="ArrivalStationName" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_User_Login" ReturnType="Collection(TrainManagementModel.sp_User_Login_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Count_SeatAvailable" ReturnType="Collection(Int32)">
+            <Parameter Name="TrainCode" Mode="In" Type="String" />
+            <Parameter Name="ClassId" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="sp_User_Login_Result">
-          <Property Type="Boolean" Name="Result" Nullable="true" />
-          <Property Type="Decimal" Name="UserId" Nullable="true" Precision="18" Scale="0" />
-        </ComplexType>
-        <EntityType Name="View_GetTrainSchedule">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="StationId" />
-          </Key>
-          <Property Name="id" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="TrainId" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TrainNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TrainName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StationId" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="StationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DepartureDate" Type="DateTime" Precision="3" />
-          <Property Name="DepartureTime" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-        </EntityType>
         <ComplexType Name="sp_GetTrainSchedule_Result">
           <Property Type="String" Name="DepartureStation" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Train" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="TrainId" Nullable="true" Precision="18" Scale="0" />
           <Property Type="DateTime" Name="DepartureDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="DepartureTime" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ArrivalStation" Nullable="true" MaxLength="50" />
@@ -695,6 +728,10 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <Property Type="DateTime" Name="ArrivalDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="ArrivalTime" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="sp_User_Login_Result">
+          <Property Type="Boolean" Name="Result" Nullable="true" />
+          <Property Type="Decimal" Name="UserId" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -704,16 +741,27 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
           <EntitySetMapping Name="tblBookings">
             <EntityTypeMapping TypeName="TrainManagementModel.tblBooking">
               <MappingFragment StoreEntitySet="tblBooking">
+                <ScalarProperty Name="IsCancel" ColumnName="IsCancel" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PassportId" ColumnName="PassportId" />
+                <ScalarProperty Name="PRN" ColumnName="PRN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblBookingDetails">
             <EntityTypeMapping TypeName="TrainManagementModel.tblBookingDetail">
               <MappingFragment StoreEntitySet="tblBookingDetail">
+                <ScalarProperty Name="CoachNum" ColumnName="CoachNum" />
+                <ScalarProperty Name="SeatNum" ColumnName="SeatNum" />
+                <ScalarProperty Name="EndStationName" ColumnName="EndStationName" />
+                <ScalarProperty Name="StartStationName" ColumnName="StartStationName" />
+                <ScalarProperty Name="DepTime" ColumnName="DepTime" />
+                <ScalarProperty Name="DepDay" ColumnName="DepDay" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
                 <ScalarProperty Name="Class" ColumnName="Class" />
@@ -721,6 +769,8 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
                 <ScalarProperty Name="EndStation" ColumnName="EndStation" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TrainCode" ColumnName="TrainCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -844,25 +894,17 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_User_Login" FunctionName="TrainManagementModel.Store.sp_User_Login">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TrainManagementModel.sp_User_Login_Result">
-                <ScalarProperty Name="Result" ColumnName="Result" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="View_GetTrainSchedule">
             <EntityTypeMapping TypeName="TrainManagementModel.View_GetTrainSchedule">
               <MappingFragment StoreEntitySet="View_GetTrainSchedule">
-                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
-                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
-                <ScalarProperty Name="StationName" ColumnName="StationName" />
-                <ScalarProperty Name="StationId" ColumnName="StationId" />
-                <ScalarProperty Name="TrainName" ColumnName="TrainName" />
-                <ScalarProperty Name="TrainNo" ColumnName="TrainNo" />
-                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
+                <ScalarProperty Name="TrainNo" ColumnName="TrainNo" />
+                <ScalarProperty Name="TrainName" ColumnName="TrainName" />
+                <ScalarProperty Name="StationId" ColumnName="StationId" />
+                <ScalarProperty Name="StationName" ColumnName="StationName" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -871,6 +913,7 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
               <ComplexTypeMapping TypeName="TrainManagementModel.sp_GetTrainSchedule_Result">
                 <ScalarProperty Name="DepartureStation" ColumnName="DepartureStation" />
                 <ScalarProperty Name="Train" ColumnName="Train" />
+                <ScalarProperty Name="TrainId" ColumnName="TrainId" />
                 <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
                 <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
                 <ScalarProperty Name="ArrivalStation" ColumnName="ArrivalStation" />
@@ -893,6 +936,15 @@ warning 6002: The table/view 'TrainManagement.dbo.View_GetTrainSchedule' does no
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_User_Login" FunctionName="TrainManagementModel.Store.sp_User_Login">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TrainManagementModel.sp_User_Login_Result">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Count_SeatAvailable" FunctionName="TrainManagementModel.Store.sp_Count_SeatAvailable" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

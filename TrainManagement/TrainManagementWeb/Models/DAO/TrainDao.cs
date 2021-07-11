@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using TrainManagementWeb.Models.EF;
@@ -19,6 +20,49 @@ namespace TrainManagementWeb.Models.DAO
             var trains = db.tblTrains.ToList();
             return trains;
         }
+
+        public int GetSeatAvailable(string trainCode, int classSeat, string depDate)
+        {
+            int seatAvailable = 0;
+            DateTime depDay = DateTime.ParseExact(depDate, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var seatBooking = db.sp_Count_SeatAvailable(trainCode, classSeat, depDay).FirstOrDefault();
+            if(seatBooking == null)
+            {
+                seatBooking = 0;
+            }
+            var train = db.tblTrains.Where(x => x.TrainCode == trainCode).FirstOrDefault();
+            var seatTotal1 = train.ACCoaches * train.ACSeats;
+            var seatTotal2 = train.FirstClassCoaches * train.FirstClassSeats;
+            var seatTotal3 = train.SleeperClassCoaches * train.SleeperClassSeats;
+            if (classSeat == 1)
+            {
+                seatAvailable = seatTotal1.Value - seatBooking.Value;
+            }
+            else if (classSeat == 2)
+            {
+                seatAvailable = seatTotal2.Value - seatBooking.Value;
+            }
+            else
+            {
+                seatAvailable = seatTotal3.Value - seatBooking.Value;
+            }
+            return seatAvailable;
+        }
+
+        public int GetSeatBooked(string trainCode, int classSeat, string depDate)
+        {
+            int seatBooked = 0;
+            DateTime depDay = DateTime.ParseExact(depDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var seatBooking = db.sp_Count_SeatAvailable(trainCode, classSeat, depDay).FirstOrDefault();
+            if (seatBooking == null)
+            {
+                seatBooking = 0;
+            }
+            
+            return seatBooking.Value;
+        }
+
+
 
         public tblTrain GetTrainDetail(decimal id)
         {
