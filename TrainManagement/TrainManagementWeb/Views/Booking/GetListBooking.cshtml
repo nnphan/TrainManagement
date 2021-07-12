@@ -27,56 +27,66 @@
                                                 <td>Passport Id</td>
                                                 <td>Status</td>
                                                 <td>Booking Date</td>
-                                                <td>traincode</td>
+                                                <td>Train Code</td>
                                                 <td>Class</td>
-                                                <td>price</td>
-                                                <td>quantity</td>
-                                                <td>startstationname</td>
-                                                <td>endstationname</td>
-                                                <td>deptime</td>
-                                                <td>depday</td>
+                                                <td>Price</td>
+                                                <td>Departure</td>
+                                                <td>Arrival</td>
+                                                <td>Time</td>
+                                                <td>Day</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in Model.bookingDetail)
                                             {
-                                                <tr>
-                                                    <td>@item.UserName</td>
-                                                    <td>@item.PhoneNumber</td>
-                                                    <td>@item.PassportId</td>
-                                                    @if (item.isCancel == true)
-                                                    {
-                                                        <td>Cancelled</td>
+                                            <tr>
+                                                <td>@item.UserName</td>
+                                                <td>@item.PhoneNumber</td>
+                                                <td>@item.PassportId</td>
+                                                @if (item.isCancel == true)
+                                                {
+                                                    <td>Cancelled</td>
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <td>Available</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Available</td>
 
-                                                    }
-                                                    <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
-                                                    <td>@item.traincode</td>
-                                                    <td>@item.Class</td>
-                                                    <td>@item.price.Value.ToString("N0")</td>
-                                                    <td>@item.quantity</td>
-                                                    <td>@item.startstationname</td>
-                                                    <td>@item.endstationname</td>
-                                                    <td>@item.deptime</td>
-                                                    <td>@item.depday.Value.ToString("dd/MM/yyyy")</td>
-                                                </tr>
+                                                }
+                                                <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.traincode</td>
+                                                @if (@item.Class == 1)
+                                                {
+                                                    <td>AC Coach</td>
+                                                }
+                                                else if (@item.Class == 2)
+                                                {
+                                                    <td>First Class Coach</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Sleeper Class Coach</td>
+
+                                                }
+                                                <td>@item.price.Value.ToString("N0")</td>
+                                                <td>@item.startstationname</td>
+                                                <td>@item.endstationname</td>
+                                                <td>@item.deptime</td>
+                                                <td>@item.depday.Value.ToString("dd/MM/yyyy")</td>
+                                            </tr>
                                             }
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td>Total Price:</td>
-                                                <td>@Model.totalPrice</td>
+                                                <td>@Model.totalPrice.ToString("N0")</td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                     <a href="/">
                                         <button id="btnPayment" class="btn">Back</button>
                                     </a>
-                                    <a href="/Booking/CancelBooking/@ViewBag.PRN">
+                                    <a href="/Booking/CancelBooking?prn=@ViewBag.PRN">
                                         <button id="btnPayment" class="btn">Cancel Booking</button>
                                     </a>
 

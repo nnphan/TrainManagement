@@ -1,8 +1,12 @@
-﻿
-@{
-    ViewBag.Title = "InfoCart";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model List<TrainManagementWeb.Models.ViewModel.CartItemViewModel>
+    @{
+        ViewBag.Title = "InfoCart";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        foreach(var item in Model)
+        {
+            var k = item.arStation;
+        }
+    }
 
     <div class="colorlib-wrap">
         <div class="container">
@@ -12,52 +16,66 @@
                         <div class="col-md-12">
                             <div class="wrap-division">
                                 <div class="col-md-12 col-md-offset-0 heading2 animate-box">
-                                    <h2>Payment</h2>
+                                    <h2>Booking cart</h2>
                                 </div>
-                                <div class="row">
+                                @if (Model != null && Model.Count > 0)
+                                {
+                            <div class="row">
 
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <td>Train Code</td>
-                                                <td>Route</td>
-                                                <td>Seat No</td>
-                                                <td>Coach No</td>
-                                                <td>Departure Time</td>
-                                                <td>Departure Date</td>
-                                                <td>Price</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>T01</td>
-                                                <td>Sai Gon - Nha Trang</td>
-                                                <td>12</td>
-                                                <td>4</td>
-                                                <td>22/07/2021</td>
-                                                <td>17:00</td>
-                                                <td>500,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>T01</td>
-                                                <td>Sai Gon - Nha Trang</td>
-                                                <td>15</td>
-                                                <td>4</td>
-                                                <td>22/07/2021</td>
-                                                <td>17:00</td>
-                                                <td>500,000</td>
-                                            </tr>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>Train Code</td>
+                                            <td>Route</td>
+                                            <td>Seat No</td>
+                                            <td>Coach No</td>
+                                            <td>Class</td>
+                                            <td>Departure Time</td>
+                                            <td>Departure Date</td>
+                                            <td>Price</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                        <tr>
+                                            <td>@(!string.IsNullOrEmpty(item.trainCode) ? item.trainCode : string.Empty  )</td>
+                                            <td>@(!(string.IsNullOrEmpty(item.depStation) && string.IsNullOrEmpty(item.arStation)) ? item.depStation +"-" + item.arStation : string.Empty ) </td>
+                                            <td>@(item.seatNum.HasValue ? item.seatNum.Value.ToString() : string.Empty )</td>
+                                            <td>@(item.coachNum.HasValue ? item.coachNum.Value.ToString() : string.Empty ) </td>
+                                            <td>@item.classSeat</td>
+                                            <td>@(!(string.IsNullOrEmpty(@item.depTime)) ? @item.depTime : string.Empty  )</td>
+                                            <td>@(!(string.IsNullOrEmpty(item.deDay)) ? item.deDay : string.Empty )</td>
+                                            <td>@(item.price.HasValue ? item.price.Value.ToString("N0"): string.Empty ) </td>
+                                        </tr>
+                                        }
 
 
-                                        </tbody>
 
-                                    </table>
-                                    <a href="/Cart/Payment">
-                                        <button id="btnPayment" class="btn">Check out</button>
-                                    </a>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>@ViewBag.Total</td>                                           
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+
+                                <a href="/Booking/Detail/?trainCode=@ViewBag.trainCode&departureStationName=@ViewBag.depStation&arrivalStationName=@ViewBag.arStation&departureDate=@ViewBag.deDay">
+                                    <button id="btnPayment" class="btn">Continue Booking</button>
+                                </a>
+                                <a href="/Cart/Payment">
+                                    <button id="btnPayment" class="btn">Check out</button>
+                                </a>
 
 
-                                </div>
+                            </div>
+                                }
+                                else
+                                {
+                                    <span class="alert alert-danger">No Item in Cart</span>
+                                }
 
 
 

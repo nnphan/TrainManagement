@@ -18,7 +18,7 @@ namespace TrainManagementWeb.Controllers
         public ActionResult CartDetail()
         {
             var cart = Session[CartSession];
-            var listCart = new BookingCart();
+            BookingCart listCart = new BookingCart();
             BookingCartViewModel bookingCartViewModel = new BookingCartViewModel();
             List<CartItemViewModel> listItem = new List<CartItemViewModel>();
             var cartItemViewModel1 = new CartItemViewModel();
@@ -75,10 +75,40 @@ namespace TrainManagementWeb.Controllers
 
         }
 
-        public ActionResult InfoCart()
+        public ActionResult InfoCart(string trainCode, string depStation, string arStation, string deDay, string depTime)
         {
+            DateTime date = DateTime.ParseExact(deDay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            deDay = date.ToString("MM/dd/yyyy");
+            List<CartItemViewModel> listItem = new List<CartItemViewModel>();
+            var cartItemViewModel1 = new CartItemViewModel();
 
-            return View();
+            var cart = Session[CartSession];
+            BookingCart listCart = new BookingCart();
+            listCart = (BookingCart)cart;
+            foreach (CartItem i in listCart.listItem)
+            {
+                CartItemViewModel cartItemViewModel = new CartItemViewModel();
+                cartItemViewModel.trainCode = i.BookingTrain.trainCode;
+                cartItemViewModel.depStation = i.BookingTrain.depStation;
+                cartItemViewModel.arStation = i.BookingTrain.arStation;
+                cartItemViewModel.deDay = i.BookingTrain.deDay;
+                cartItemViewModel.depTime = i.BookingTrain.depTime;
+                cartItemViewModel.price = i.BookingTrain.price;
+                cartItemViewModel.classSeatId = i.BookingTrain.classSeatId;
+                cartItemViewModel.classSeat = i.BookingTrain.classSeat;
+                cartItemViewModel.seatNum = i.BookingTrain.seatNum;
+                cartItemViewModel.coachNum = i.BookingTrain.coachNum;
+                listItem.Add(cartItemViewModel);
+            }
+
+            var total = listCart.total.Value.ToString("N0");
+            ViewBag.trainCode = trainCode;
+            ViewBag.depStation = depStation;
+            ViewBag.arStation = arStation;
+            ViewBag.deDay = deDay;
+            ViewBag.depTime = depTime;
+            ViewBag.Total = total;
+            return View(listItem);
 
         }
 
@@ -143,8 +173,6 @@ namespace TrainManagementWeb.Controllers
                         trainBooking.coachNum = 8;
                     }
 
-                    cartList.quantity += 1;
-                    cartList.total += price;
                 }
                 else
                 {
@@ -155,16 +183,19 @@ namespace TrainManagementWeb.Controllers
                     {
                         trainBooking.seatNum = cartList.seatClass1 + 1;
                         trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 1, deDay) + 1;
+                        trainBooking.coachNum = 2;
                     }
                     else if (classSeat == "First Class Coaches")
                     {
                         trainBooking.seatNum = cartList.seatClass2 + 1;
                         trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 2, deDay) + 1;
+                        trainBooking.coachNum = 5;
                     }
                     else
                     {
                         trainBooking.seatNum = cartList.seatClass3 + 1;
                         trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 3, deDay) + 1;
+                        trainBooking.coachNum = 8;
                     }
                     cartList.quantity += 1;
                     cartList.total += price;
@@ -181,16 +212,19 @@ namespace TrainManagementWeb.Controllers
                 if (classSeat == "AC Coaches Class")
                 {
                     trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 1, deDay) + 1;
+                    trainBooking.coachNum = 2;
                     cartList.seatClass1 = trainBooking.seatNum;
                 }
                 else if (classSeat == "First Class Coaches")
                 {
                     trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 2, deDay) + 1;
+                    trainBooking.coachNum = 5;
                     cartList.seatClass2 = trainBooking.seatNum;
                 }
                 else
                 {
                     trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 3, deDay) + 1;
+                    trainBooking.coachNum = 8;
                     cartList.seatClass3 = trainBooking.seatNum;
 
                 }
@@ -206,13 +240,7 @@ namespace TrainManagementWeb.Controllers
             }
             var cartSession = Session[CartSession];
             var cartListSession = (BookingCart)cartSession;
-            ViewBag.trainCode = trainCode;
-            ViewBag.depStation = depStation;
-            ViewBag.arStation = arStation;
-            ViewBag.deDay = deDay;
-            ViewBag.totalPrice = cartListSession.total.Value.ToString("N0"); ;
-            ViewBag.quantity = cartListSession.quantity.ToString();
-            return RedirectToAction("InfoCart","Cart");
+            return RedirectToAction("InfoCart","Cart", new { @trainCode = trainCode, @depStation = depStation, @arStation = arStation, @deDay = deDay, @depTime = depTime });
         }
 
         [HttpGet]
@@ -222,7 +250,8 @@ namespace TrainManagementWeb.Controllers
             var list = new List<CartItem>();
             if (cart != null)
             {
-                list = (List<CartItem>)cart;
+                var cartList = (BookingCart)cart;
+                list = cartList.listItem;
             }
             return View(list);
         }
@@ -290,13 +319,14 @@ namespace TrainManagementWeb.Controllers
                 return Redirect("/");
             }
             Session.Remove("CartSession");
-            ViewBag.PRN = PRN;
-            ViewBag.TotalPrice = totalPrice;
-            return Redirect("/Cart/Success");
+            return RedirectToAction("Success", "Cart", new { @prn = PRN, @total = totalPrice });
+
         }
 
-        public ActionResult Success()
+        public ActionResult Success(string prn, string total)
         {
+            ViewBag.prn = prn;
+            ViewBag.total = total;
             return View();
         }
     }

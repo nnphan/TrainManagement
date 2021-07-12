@@ -61,7 +61,7 @@ namespace TrainManagementWeb.Models.DAO
             CancelBookingViewModel cancelBooking = new CancelBookingViewModel();
             if (booking != null)
             {
-
+                booking.IsCancel = true;
                 cancelBooking.IsSuccess = true;
                 cancelBooking.RefMoney = (booking.TotalPrice - (booking.TotalPrice * (decimal)ruleCancel)).Value;
                 db.SaveChanges();

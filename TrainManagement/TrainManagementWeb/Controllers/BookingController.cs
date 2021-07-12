@@ -30,36 +30,33 @@ namespace TrainManagementWeb.Controllers
         [HttpGet]
         public ActionResult GetListBooking(SearchBookingViewModel searchBooking)
         {
-            if (ModelState.IsValid)
-            {
+
                 BookingDao bookingDao = new BookingDao();
                 var bookingInfo = bookingDao.GetBookingInfo(searchBooking);
-                if (bookingInfo != null)
+                if (bookingInfo == null)
                 {
-                    ViewBag.PRN = searchBooking.PRNno;
-                    return View(bookingInfo);
-                }
-                else
-                {
+
                     ModelState.AddModelError("", "Booking info detail is not found.");
                 }
-                               
-            }
-            return View("Index");
+                
+                ViewBag.PRN = searchBooking.PRNno;
+                return View(bookingInfo);
         }
 
         public ActionResult CancelBooking(string prn)
         {
             if (ModelState.IsValid)
             {
+                ViewBag.PRN = "";
+                ViewBag.RefundMoney = "0";
                 BookingDao bookingDao = new BookingDao();
                 var cancelBooking = bookingDao.UpdateCancelBooking(prn);
                 if (cancelBooking.IsSuccess  == true)
                 {
-                    ViewBag.PRN = prn;
-                    ViewBag.RefundMoney = cancelBooking.RefMoney.Value.ToString("N0");
+
                     // returm success cancel view
-                    return Redirect("/Booking/SuccessCancel");
+                    return RedirectToAction("SuccessCancel", "Booking", new { @prn = prn, @refundMoney = cancelBooking.RefMoney.Value.ToString("N0") });
+
                 }
                 else
                 {
@@ -126,8 +123,10 @@ namespace TrainManagementWeb.Controllers
             return PartialView();
         }
 
-        public ActionResult SuccessCancel()
+        public ActionResult SuccessCancel(string prn, string refundMoney )
         {
+            ViewBag.prn = prn;
+            ViewBag.refundMoney = refundMoney;
             return View();
         }
         public ActionResult FailCancel()
