@@ -2,6 +2,7 @@
 <div id="hotel" class="tab-pane fade">
     <form method="get" action="/Booking/GetListBooking" class="colorlib-form">
         <div class="row">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" });
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="date">PRN no:</label>

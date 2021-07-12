@@ -16,7 +16,7 @@ namespace TrainManagementWeb.Models.DAO
         }
         public double GetRuleClassValue(int classid)
         {
-            var rule = db.tblRuleClasses.ToList().Where(x =>x.Class == classid).Select(x => x.Value).FirstOrDefault();
+            var rule = db.tblRuleClasses.ToList().Where(x =>x.Class == classid).Select(x => x.Value).FirstOrDefault().Value;
             return rule;
         }
         public double GetRuleDistanceValue()
@@ -29,9 +29,9 @@ namespace TrainManagementWeb.Models.DAO
         {
             var ruleDistance = db.tblRuleDistances.FirstOrDefault().Value;
             var ruleCancel = db.tblRuleCancelBookings.FirstOrDefault().Value;
-            var ruleClass1 = db.tblRuleClasses.ToList().Where(x => x.Class == 1).Select(x => x.Value).FirstOrDefault();
-            var ruleClass2 = db.tblRuleClasses.ToList().Where(x => x.Class == 2).Select(x => x.Value).FirstOrDefault();
-            var ruleClass3 = db.tblRuleClasses.ToList().Where(x => x.Class == 3).Select(x => x.Value).FirstOrDefault();
+            var ruleClass1 = db.tblRuleClasses.ToList().Where(x => x.Class == 1).Select(x => x.Value).FirstOrDefault().Value;
+            var ruleClass2 = db.tblRuleClasses.ToList().Where(x => x.Class == 2).Select(x => x.Value).FirstOrDefault().Value;
+            var ruleClass3 = db.tblRuleClasses.ToList().Where(x => x.Class == 3).Select(x => x.Value).FirstOrDefault().Value;
             RuleViewModel ruleViewModel = new RuleViewModel();
             ruleViewModel.RuleDistanceValue = ruleDistance.Value;
             ruleViewModel.RuleCancelValue = ruleCancel.Value;

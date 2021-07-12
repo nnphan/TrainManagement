@@ -21,18 +21,57 @@ namespace TrainManagementWeb.Models.DAO
             return booking.Id;
         }
 
-        public tblBooking GetBookingInfo(SearchBookingViewModel booking)
+        public List<sp_GetBookingDetailList_Result> GetBookingListForAdmin()
         {
-            tblBooking bookingInfo = new tblBooking();
-            if (booking.PRNno != null)
+            var lisBooking = db.sp_GetBookingDetailList().ToList();
+            return lisBooking;
+        }
+
+        public BookingDetailViewModel GetBookingInfo(SearchBookingViewModel booking)
+        {
+            var tblBooking = db.tblBookings.Where(x => x.PRN == booking.PRNno).FirstOrDefault();
+            if (tblBooking != null)
             {
-                bookingInfo = db.tblBookings.Where(x => x.PRN == booking.PRNno).FirstOrDefault();
+                var bookingDetail = new List<sp_GetBookingDetail_Result>();
+                var bookingDetailViewModel = new BookingDetailViewModel();
+                var totalPrice = db.tblBookings.Where(x => x.PRN == booking.PRNno).FirstOrDefault().TotalPrice.Value;
+                if (booking.PRNno != null)
+                {
+                    bookingDetail = db.sp_GetBookingDetail().Where(x => x.PRN == booking.PRNno).ToList();
+                }
+                else
+                {
+                    bookingDetail = db.sp_GetBookingDetail().Where(x => x.PhoneNumber == booking.PhoneNumber).ToList();
+                }
+                bookingDetailViewModel.bookingDetail = bookingDetail;
+                bookingDetailViewModel.totalPrice = totalPrice;
+                return bookingDetailViewModel;
             }
             else
             {
-                bookingInfo = db.tblBookings.Where(x => x.PhoneNumber == booking.PhoneNumber).FirstOrDefault();
+                return null;
             }
-            return bookingInfo;
+            
+        }
+
+        public CancelBookingViewModel UpdateCancelBooking(string prn)
+        {
+            var ruleCancel = db.tblRuleCancelBookings.Select(x => x.Value).FirstOrDefault();
+            var booking = db.tblBookings.Where(x => x.PRN == prn).FirstOrDefault();
+            CancelBookingViewModel cancelBooking = new CancelBookingViewModel();
+            if (booking != null)
+            {
+
+                cancelBooking.IsSuccess = true;
+                cancelBooking.RefMoney = (booking.TotalPrice - (booking.TotalPrice * (decimal)ruleCancel)).Value;
+                db.SaveChanges();
+            }
+            else
+            {
+                cancelBooking.IsSuccess = false;
+                cancelBooking.RefMoney = null;
+            }
+            return cancelBooking;
         }
 
         public bool UpdateTotal (decimal id, decimal total)

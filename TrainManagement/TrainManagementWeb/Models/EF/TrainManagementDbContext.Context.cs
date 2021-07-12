@@ -27,6 +27,7 @@ namespace TrainManagementWeb.Models.EF
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblBooking> tblBookings { get; set; }
         public virtual DbSet<tblBookingDetail> tblBookingDetails { get; set; }
         public virtual DbSet<tblClass> tblClasses { get; set; }
@@ -40,6 +41,78 @@ namespace TrainManagementWeb.Models.EF
         public virtual DbSet<tblTrainSchedule> tblTrainSchedules { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<View_GetTrainSchedule> View_GetTrainSchedule { get; set; }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_Count_SeatAvailable(string trainCode, Nullable<int> classId, Nullable<System.DateTime> date)
+        {
+            var trainCodeParameter = trainCode != null ?
+                new ObjectParameter("TrainCode", trainCode) :
+                new ObjectParameter("TrainCode", typeof(string));
+    
+            var classIdParameter = classId.HasValue ?
+                new ObjectParameter("ClassId", classId) :
+                new ObjectParameter("ClassId", typeof(int));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("Date", date) :
+                new ObjectParameter("Date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_Count_SeatAvailable", trainCodeParameter, classIdParameter, dateParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
     
         public virtual ObjectResult<sp_GetTrainSchedule_Result> sp_GetTrainSchedule(string departureStationName, string arrivalStationName)
         {
@@ -67,6 +140,54 @@ namespace TrainManagementWeb.Models.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetTrainScheduleList_Result>("sp_GetTrainScheduleList", departureStationNameParameter, arrivalStationNameParameter);
         }
     
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
         public virtual ObjectResult<sp_User_Login_Result> sp_User_Login(string email, string password)
         {
             var emailParameter = email != null ?
@@ -80,21 +201,19 @@ namespace TrainManagementWeb.Models.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_User_Login_Result>("sp_User_Login", emailParameter, passwordParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> sp_Count_SeatAvailable(string trainCode, Nullable<int> classId, Nullable<System.DateTime> date)
+        public virtual ObjectResult<sp_GetBookingDetail_Result> sp_GetBookingDetail()
         {
-            var trainCodeParameter = trainCode != null ?
-                new ObjectParameter("TrainCode", trainCode) :
-                new ObjectParameter("TrainCode", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetBookingDetail_Result>("sp_GetBookingDetail");
+        }
     
-            var classIdParameter = classId.HasValue ?
-                new ObjectParameter("ClassId", classId) :
-                new ObjectParameter("ClassId", typeof(int));
+        public virtual ObjectResult<sp_GetBookingDetailCancelList_Result> sp_GetBookingDetailCancelList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetBookingDetailCancelList_Result>("sp_GetBookingDetailCancelList");
+        }
     
-            var dateParameter = date.HasValue ?
-                new ObjectParameter("Date", date) :
-                new ObjectParameter("Date", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_Count_SeatAvailable", trainCodeParameter, classIdParameter, dateParameter);
+        public virtual ObjectResult<sp_GetBookingDetailList_Result> sp_GetBookingDetailList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetBookingDetailList_Result>("sp_GetBookingDetailList");
         }
     }
 }

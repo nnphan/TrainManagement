@@ -20,7 +20,7 @@ namespace TrainManagementWeb.Models.EF
         public string TrainName { get; set; }
         public decimal StationId { get; set; }
         public string StationName { get; set; }
-        public System.DateTime DepartureDate { get; set; }
+        public Nullable<System.DateTime> DepartureDate { get; set; }
         public string DepartureTime { get; set; }
     }
 }

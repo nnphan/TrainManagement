@@ -34,11 +34,42 @@ namespace TrainManagementWeb.Controllers
             {
                 BookingDao bookingDao = new BookingDao();
                 var bookingInfo = bookingDao.GetBookingInfo(searchBooking);
-                return View(bookingInfo);
+                if (bookingInfo != null)
+                {
+                    ViewBag.PRN = searchBooking.PRNno;
+                    return View(bookingInfo);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Booking info detail is not found.");
+                }
+                               
             }
             return View("Index");
         }
-        
+
+        public ActionResult CancelBooking(string prn)
+        {
+            if (ModelState.IsValid)
+            {
+                BookingDao bookingDao = new BookingDao();
+                var cancelBooking = bookingDao.UpdateCancelBooking(prn);
+                if (cancelBooking.IsSuccess  == true)
+                {
+                    ViewBag.PRN = prn;
+                    ViewBag.RefundMoney = cancelBooking.RefMoney.Value.ToString("N0");
+                    // returm success cancel view
+                    return Redirect("/Booking/SuccessCancel");
+                }
+                else
+                {
+                    return Redirect("/Booking/FailCancel");
+                }
+
+            }
+            return View("Index");
+        }
+
         public void SetViewBag(decimal? selectedId = null)
         {
             var stationDao = new StationDao();
@@ -93,6 +124,15 @@ namespace TrainManagementWeb.Controllers
             var model = new TrainDao().GetListTrain();
             SetViewBag();
             return PartialView();
+        }
+
+        public ActionResult SuccessCancel()
+        {
+            return View();
+        }
+        public ActionResult FailCancel()
+        {
+            return View();
         }
 
         

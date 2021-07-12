@@ -1,0 +1,134 @@
+﻿@model List<TrainManagementWeb.Models.EF.sp_GetBookingDetailList_Result>
+@{
+    ViewBag.Title = "GetBookingList";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Booking List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-12 text-sm-center form-inline">
+                                    <div class="form-group mr-2">
+                                        <a href='@Url.Action("ExportExcel", "Booking")'>
+                                            <button class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i> Export Excel </button>
+                                        </a>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
+                            <thead>
+                                <tr>
+                                    <th data-sort-initial="true" data-toggle="true">User Name</th>
+                                    <th>Phone Num</th>
+                                    <th>Passport Id</th>
+                                    <th>PRN</th>
+                                    <th>Status</th>
+                                    <th>Booking Date </th>
+                                    <th>Train code</th>
+                                    <th>Class </th>
+                                    <th>Price </th>
+                                    <th>Quantity </th>
+                                    <th>Start Station</th>
+                                    <th>End Station</th>
+                                    <th>Dep day </th>
+                                    <th>Dep time </th>
+                                    <th>Refund Money</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                        {
+                                    <tr @*, onclick="location.href = '@Url.Action("Edit", "Train", new { id=item.Id })'"*@>
+                                        <td>@item.UserName</td>
+                                        <td>@item.PhoneNumber</td>
+                                        <td>@item.PassportId</td>
+                                        <td>@item.PRN</td>
+                                        @if (@item.isCancel == true)
+                                        {
+                                            <td>Cancelled</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Available</td>
+
+                                        }
+                                        <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.traincode</td>
+                                        @if (@item.Class == 1)
+                                        {
+                                            <td>AC Coach</td>
+                                        }
+                                        else if (@item.Class == 2)
+                                        {
+                                            <td>First Class Coach</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Sleeper Class Coach</td>
+
+                                        }
+                                        <td>@item.price.Value.ToString("N0")</td>
+                                        <td>@item.quantity</td>
+                                        <td>@item.startstationname</td>
+                                        <td>@item.endstationname</td>
+                                        <td>@item.depday.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.deptime</td>
+                                        @if (@item.RefuncMoney == null)
+                                        {
+                                            <td>0</td>
+                                        }                                        
+                                        else
+                                        {
+                                            <td>@item.RefuncMoney.Value.ToString("N0")</td>
+                                        }
+                                        
+                                    </tr>
+                                        }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr class="active">
+                                        <td colspan="15">
+                                            <div class="text-right">
+                                                <ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                        </table>
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+
+</div>
+

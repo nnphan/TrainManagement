@@ -1,0 +1,99 @@
+﻿@model TrainManagementWeb.Models.ViewModel.BookingDetailViewModel
+
+@{
+    ViewBag.Title = "GetListBooking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="colorlib-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="wrap-division">
+                            <div class="col-md-12 col-md-offset-0 heading2 animate-box">
+                                <h2>Your Reservasion</h2>
+                            </div>
+                            @if (Model.bookingDetail.Count > 0)
+                            {
+                                <div class="row">
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>User Name</td>
+                                                <td>Phone Number</td>
+                                                <td>Passport Id</td>
+                                                <td>Status</td>
+                                                <td>Booking Date</td>
+                                                <td>traincode</td>
+                                                <td>Class</td>
+                                                <td>price</td>
+                                                <td>quantity</td>
+                                                <td>startstationname</td>
+                                                <td>endstationname</td>
+                                                <td>deptime</td>
+                                                <td>depday</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.bookingDetail)
+                                            {
+                                                <tr>
+                                                    <td>@item.UserName</td>
+                                                    <td>@item.PhoneNumber</td>
+                                                    <td>@item.PassportId</td>
+                                                    @if (item.isCancel == true)
+                                                    {
+                                                        <td>Cancelled</td>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Available</td>
+
+                                                    }
+                                                    <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
+                                                    <td>@item.traincode</td>
+                                                    <td>@item.Class</td>
+                                                    <td>@item.price.Value.ToString("N0")</td>
+                                                    <td>@item.quantity</td>
+                                                    <td>@item.startstationname</td>
+                                                    <td>@item.endstationname</td>
+                                                    <td>@item.deptime</td>
+                                                    <td>@item.depday.Value.ToString("dd/MM/yyyy")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>Total Price:</td>
+                                                <td>@Model.totalPrice</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <a href="/">
+                                        <button id="btnPayment" class="btn">Back</button>
+                                    </a>
+                                    <a href="/Booking/CancelBooking/@ViewBag.PRN">
+                                        <button id="btnPayment" class="btn">Cancel Booking</button>
+                                    </a>
+
+
+
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="alert alert-danger">No Item in Cart</span>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

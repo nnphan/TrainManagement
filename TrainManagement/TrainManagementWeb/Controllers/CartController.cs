@@ -14,15 +14,85 @@ namespace TrainManagementWeb.Controllers
     {
         private const string CartSession = "CartSession";
         // GET: Cart
+        [HttpGet]
         public ActionResult CartDetail()
         {
             var cart = Session[CartSession];
-            var list = new List<CartItem>();
+            var listCart = new BookingCart();
+            BookingCartViewModel bookingCartViewModel = new BookingCartViewModel();
+            List<CartItemViewModel> listItem = new List<CartItemViewModel>();
+            var cartItemViewModel1 = new CartItemViewModel();
+            cartItemViewModel1.trainCode = "T01";
+            cartItemViewModel1.depStation = "Sai gon";
+            cartItemViewModel1.classSeat = "Nha Trang";
+            cartItemViewModel1.deDay = "22/07/2021";
+            cartItemViewModel1.depTime = "20:20";
+            cartItemViewModel1.price = 1234455;
+
             if (cart != null)
             {
-                list = (List<CartItem>)cart;
+               
+                listCart = (BookingCart)cart;
+                if(listCart.total == null)
+                {
+                    bookingCartViewModel.total = 0;
+                }
+                else
+                {
+                    bookingCartViewModel.total = listCart.total.Value;
+                }
+                bookingCartViewModel.quantity = 1;
+               var k = listCart.listItem;
+                foreach (CartItem i in k)
+                {
+                    CartItemViewModel cartItemViewModel = new CartItemViewModel();
+                    cartItemViewModel.trainCode = i.BookingTrain.trainCode;
+                    cartItemViewModel.depStation = i.BookingTrain.depStation;
+                    cartItemViewModel.arStation = i.BookingTrain.arStation;
+                    cartItemViewModel.deDay = i.BookingTrain.deDay; 
+                    cartItemViewModel.depTime = i.BookingTrain.depTime;
+                    cartItemViewModel.price = i.BookingTrain.price;
+                    cartItemViewModel.classSeatId = i.BookingTrain.classSeatId;
+                    cartItemViewModel.classSeat = i.BookingTrain.classSeat;
+                    cartItemViewModel.seatNum = i.BookingTrain.seatNum;
+                    cartItemViewModel.coachNum = i.BookingTrain.coachNum;
+                    listItem.Add(cartItemViewModel);
+                }
+                return View(listItem);
             }
-            return View(list);
+            else
+            {
+                listItem = null;
+                return View(listItem);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CartInfo()
+        {
+            
+                return View();
+
+        }
+
+        public ActionResult InfoCart()
+        {
+
+            return View();
+
+        }
+
+
+
+        public ActionResult DeleteAll()
+        {
+            Session[CartSession] = null;
+            var list = new List<CartItem>();
+            return RedirectToAction("CartInfo");
+            //return Json(new
+            //{
+            //    status = true
+            //});
         }
 
         public ActionResult AddItem(string trainCode, string depStation, string arStation, string deDay, string depTime,decimal price, string classSeat )
@@ -39,55 +109,110 @@ namespace TrainManagementWeb.Controllers
             trainBooking.price = price;
             if (classSeat == "AC Coaches Class")
             {
-                trainBooking.seatNum = trainDao.GetSeatBooked(trainCode,1 , deDay);
+                //trainBooking.seatNum = trainDao.GetSeatBooked(trainCode,1 , deDay) + 1;
                 trainBooking.classSeatId = 1;
             }
             else if (classSeat == "First Class Coaches")
             {
-                trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 2 , deDay);
+                //trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 2 , deDay) + 1;
                 trainBooking.classSeatId = 2;
             }
             else
             {
-                trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 3 , deDay);
+                //trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 3 , deDay) + 1;
                 trainBooking.classSeatId = 3;
             }
             if (cart != null)
             {
-                var list = (List<CartItem>)cart;
-                if (list.Exists(x => x.BookingTrain.classSeat == classSeat))
+                var cartList = (BookingCart)cart;
+                if (cartList.listItem.Exists(x => x.BookingTrain.classSeat == classSeat))
                 {
-
-                    foreach (var item in list)
+                    if(classSeat == "AC Coaches Class")
                     {
-                        if (item.BookingTrain.classSeat == classSeat)
-                        {
-                            item.Quantity += 1;
-                        }
+                        trainBooking.seatNum = cartList.seatClass1 + 1;
+                        trainBooking.coachNum = 2;
                     }
+                    else if (classSeat ==  "First Class Coaches")
+                    {
+                        trainBooking.seatNum = cartList.seatClass2 + 1;
+                        trainBooking.coachNum = 5;
+                    }
+                    else
+                    {
+                        trainBooking.seatNum = cartList.seatClass3 + 1;
+                        trainBooking.coachNum = 8;
+                    }
+
+                    cartList.quantity += 1;
+                    cartList.total += price;
                 }
                 else
                 {
                     //Create new item
                     var item = new CartItem();
                     item.BookingTrain = trainBooking;
-                    item.Quantity = 1;
-                    list.Add(item);
+                    if (classSeat == "AC Coaches Class")
+                    {
+                        trainBooking.seatNum = cartList.seatClass1 + 1;
+                        trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 1, deDay) + 1;
+                    }
+                    else if (classSeat == "First Class Coaches")
+                    {
+                        trainBooking.seatNum = cartList.seatClass2 + 1;
+                        trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 2, deDay) + 1;
+                    }
+                    else
+                    {
+                        trainBooking.seatNum = cartList.seatClass3 + 1;
+                        trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 3, deDay) + 1;
+                    }
+                    cartList.quantity += 1;
+                    cartList.total += price;
+                    cartList.listItem.Add(item);
                 }
-                //Add to Session
-                Session[CartSession] = list;
+                //Add to Session               
+                Session[CartSession] = cartList;
             }
             else
             {
+                var cartList = new BookingCart();
                 var item = new CartItem();
                 item.BookingTrain = trainBooking;
+                if (classSeat == "AC Coaches Class")
+                {
+                    trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 1, deDay) + 1;
+                    cartList.seatClass1 = trainBooking.seatNum;
+                }
+                else if (classSeat == "First Class Coaches")
+                {
+                    trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 2, deDay) + 1;
+                    cartList.seatClass2 = trainBooking.seatNum;
+                }
+                else
+                {
+                    trainBooking.seatNum = trainDao.GetSeatBooked(trainCode, 3, deDay) + 1;
+                    cartList.seatClass3 = trainBooking.seatNum;
+
+                }
                 item.Quantity = 1;    // Update quantity
-                var list = new List<CartItem>();
-                list.Add(item);
+                
+                List<CartItem> listItem = new List<CartItem>();
+                listItem.Add(item);
+                cartList.quantity = 1;
+                cartList.total = price;
+                cartList.listItem = listItem;
                 //Add to Session
-                Session[CartSession] = list;
+                Session[CartSession] = cartList;
             }
-            return RedirectToAction("CartDetail");
+            var cartSession = Session[CartSession];
+            var cartListSession = (BookingCart)cartSession;
+            ViewBag.trainCode = trainCode;
+            ViewBag.depStation = depStation;
+            ViewBag.arStation = arStation;
+            ViewBag.deDay = deDay;
+            ViewBag.totalPrice = cartListSession.total.Value.ToString("N0"); ;
+            ViewBag.quantity = cartListSession.quantity.ToString();
+            return RedirectToAction("InfoCart","Cart");
         }
 
         [HttpGet]
@@ -112,21 +237,25 @@ namespace TrainManagementWeb.Controllers
             booking.UserName = userName;
             var trainDao = new TrainDao();
             var stationDao = new StationDao();
-
+            string PRN = string.Empty;
+            string totalPrice = string.Empty;
             try
             {
                 String date = DateTime.Now.Day.ToString();
                 String Month = DateTime.Now.Month.ToString();
                 String Year = DateTime.Now.Year.ToString();
-                var cart = (List<CartItem>)Session[CartSession];
+                var cart = (BookingCart)Session[CartSession];
                 var detailDao = new BookingDetailDao();
                 var bookingDetail = new tblBookingDetail();
                 decimal total = 0;
+                total = cart.total.Value;
+                totalPrice = cart.total.Value.ToString("N0");
                 booking.PRN = passporid + date + Month ;
+                PRN = passporid + date + Month;
                 var bookingDao = new BookingDao();
                 var id = bookingDao.Insert(booking);
 
-                foreach (var item in cart)
+                foreach (var item in cart.listItem)
                 {                   
                     bookingDetail.TrainCode = item.BookingTrain.trainCode;
                     bookingDetail.StartStation = stationDao.GetStationByName(item.BookingTrain.depStation).Id;
@@ -142,7 +271,6 @@ namespace TrainManagementWeb.Controllers
                     bookingDetail.Price = item.BookingTrain.price;
                     bookingDetail.Quantity = item.Quantity;
                     bookingDetail.BookingId = id;
-                    total += (item.BookingTrain.price * item.Quantity);
                     var res = detailDao.Insert(bookingDetail);
                 }
                 var updateTotal = bookingDao.UpdateTotal(id, total);
@@ -159,9 +287,11 @@ namespace TrainManagementWeb.Controllers
             }
             catch (Exception ex)
             {
-                return Redirect("/loi-thanh-toan");
+                return Redirect("/");
             }
             Session.Remove("CartSession");
+            ViewBag.PRN = PRN;
+            ViewBag.TotalPrice = totalPrice;
             return Redirect("/Cart/Success");
         }
 

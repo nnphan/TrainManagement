@@ -10,14 +10,10 @@
 namespace TrainManagementWeb.Models.EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblRuleClass
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int Id { get; set; }
-        public string RulName { get; set; }
-        public string RuleType { get; set; }
-        public Nullable<int> Class { get; set; }
-        public Nullable<double> Value { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

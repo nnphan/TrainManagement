@@ -45,18 +45,46 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.95.4\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=5.7.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.7.1\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -118,6 +146,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -131,6 +160,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BookingController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\RuleController.cs" />
     <Compile Include="Areas\Admin\Controllers\ScheduleController.cs" />
@@ -157,13 +187,31 @@
     <Compile Include="Models\DAO\TrainDao.cs" />
     <Compile Include="Models\DAO\TrainScheduleDao.cs" />
     <Compile Include="Models\DAO\UserDao.cs" />
+    <Compile Include="Models\EF\sp_GetBookingDetailCancelList_Result.cs">
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\sp_GetBookingDetailList_Result.cs">
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\sp_GetBookingDetail_Result.cs">
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\sp_GetTrainScheduleList_Result.cs">
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\sp_GetTrainSchedule_Result.cs">
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\sp_helpdiagrams_Result.cs">
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\sp_User_Login_Result.cs">
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\sysdiagram.cs">
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\tblBooking.cs">
@@ -203,25 +251,30 @@
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\TrainManagementDbContext.Context.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>TrainManagementDbContext.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\TrainManagementDbContext.cs">
-      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\TrainManagementDbContext.Designer.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\View_GetTrainSchedule.cs">
       <DependentUpon>TrainManagementDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\BookingCart.cs" />
+    <Compile Include="Models\ViewModel\BookingCartViewModel.cs" />
+    <Compile Include="Models\ViewModel\BookingDetailViewModel.cs" />
     <Compile Include="Models\ViewModel\BookingTrain.cs" />
+    <Compile Include="Models\ViewModel\CancelBookingViewModel.cs" />
     <Compile Include="Models\ViewModel\CartItem.cs" />
+    <Compile Include="Models\ViewModel\CartItemViewModel.cs" />
     <Compile Include="Models\ViewModel\CreateStationModel.cs" />
     <Compile Include="Models\ViewModel\CreateUserModel.cs" />
     <Compile Include="Models\ViewModel\LoginModel.cs" />
@@ -567,13 +620,10 @@
       <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
       <LastGenOutput>TrainManagementDbContext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EF\TrainManagementDbContext.edmx.diagram">
-      <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
-    </Content>
     <Content Include="Models\EF\TrainManagementDbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TrainManagementDbContext.cs</LastGenOutput>
       <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
+      <LastGenOutput>TrainManagementDbContext.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -737,11 +787,14 @@
     <Content Include="Areas\Admin\Views\Schedule\GetTrainSchedule.cshtml" />
     <Content Include="Areas\Admin\Views\Schedule\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Schedule\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Rule\Detail.cshtml" />
     <EntityDeploy Include="Models\EF\TrainManagementDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TrainManagementDbContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Areas\Admin\Views\Rule\Detail.cshtml" />
+    <Content Include="Models\EF\TrainManagementDbContext.edmx.diagram">
+      <DependentUpon>TrainManagementDbContext.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -774,14 +827,20 @@
     <Content Include="Views\Booking\SearchReservation.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\Detail.cshtml" />
-    <Content Include="Views\Cart\CartDetail.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
     <Content Include="Views\Cart\Success.cshtml" />
+    <Content Include="Views\Booking\GetListBooking.cshtml" />
+    <Content Include="Views\Booking\SuccessCancel.cshtml" />
+    <Content Include="Views\Booking\GetBookingList.cshtml" />
+    <Content Include="Views\Cart\CartDetail.cshtml" />
+    <Content Include="Views\Cart\CartInfo.cshtml" />
+    <Content Include="Views\Cart\InfoCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Areas\Admin\Views\Booking\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
