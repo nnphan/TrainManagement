@@ -67,13 +67,7 @@ namespace TrainManagementWeb.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult CartInfo()
-        {
-            
-                return View();
-
-        }
+      
 
         public ActionResult InfoCart(string trainCode, string depStation, string arStation, string deDay, string depTime)
         {

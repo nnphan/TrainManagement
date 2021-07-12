@@ -820,7 +820,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Booking\GetListTrainSchedule.cshtml" />
     <Content Include="Views\Booking\SearchTrain.cshtml" />
@@ -835,6 +834,7 @@
     <Content Include="Views\Cart\CartDetail.cshtml" />
     <Content Include="Views\Cart\CartInfo.cshtml" />
     <Content Include="Views\Cart\InfoCart.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
